@@ -6,8 +6,8 @@
 		xmlns:viewmodels="clr-namespace:SmartShop.ViewModels"
 		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 		Title="Smart Shop"
-		Width="1200"
-		Height="900"
+		MinWidth="1600"
+		MinHeight="900"
 		d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
 		WindowState="Maximized"
 		mc:Ignorable="d">
@@ -91,6 +91,7 @@
 				<ColumnDefinition Width="2*" />
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
+
 			<Button Grid.Column="0"
 					Margin="10"
 					HorizontalAlignment="Right"

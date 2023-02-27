@@ -456,7 +456,7 @@
 					<Setter.Value>
 						<ControlTemplate TargetType="Thumb">
 							<Rectangle Width="15"
-									   Fill="{StaticResource AppThemePrimaryColor}" />
+									   Fill="DarkSlateGray" />
 						</ControlTemplate>
 					</Setter.Value>
 				</Setter>
@@ -472,7 +472,7 @@
 				<Setter Property="Template">
 					<Setter.Value>
 						<ControlTemplate TargetType="Thumb">
-							<Rectangle Fill="{StaticResource AppThemePrimaryColor}" />
+							<Rectangle Fill="DarkSlateGray" />
 						</ControlTemplate>
 					</Setter.Value>
 				</Setter>

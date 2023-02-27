@@ -6,25 +6,26 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SmartShop.ViewModels;
 
 public class MainViewModel : PropertyChangedBase
 {
-	private const int ItemsPerPage = 30;
 	private readonly List<Product> _data;
 	private readonly IProductService _productService;
 
 	private string _searchText;
 	private ObservableCollection<Page> _pages = new();
-	private int _totalItems, _totalPages, _currentPage;
+	private int _totalPages, _currentPage, _itemsPerPage;
 	private ObservableCollection<Product> _products, _pagedProducts;
 
 	public MainViewModel(IProductService productService)
 	{
 		_productService = productService;
 		_data = _productService.GetProducts();
+		SetItemsPerPage();
 
 		ClearCommand = new RelayCommand(ClearSearch);
 		GoToPreviousPageCommand = new RelayCommand(() => CurrentPage--, () => CurrentPage > 1);
@@ -34,7 +35,6 @@ public class MainViewModel : PropertyChangedBase
 		Products = new ObservableCollection<Product>(_data);
 	}
 
-	public int TotalItems { get => _totalItems; private set => SetField(ref _totalItems, value); }
 	public int TotalPages { get => _totalPages; private set => SetField(ref _totalPages, value); }
 	public ObservableCollection<Page> Pages { get => _pages; set => SetField(ref _pages, value); }
 	public ObservableCollection<Product> PagedProducts { get => _pagedProducts; private set => SetField(ref _pagedProducts, value); }
@@ -47,8 +47,7 @@ public class MainViewModel : PropertyChangedBase
 		{
 			if (SetField(ref _products, value))
 			{
-				TotalItems = _products.Count;
-				TotalPages = (int)Math.Ceiling((double)TotalItems / ItemsPerPage);
+				TotalPages = (int)Math.Ceiling((double)_products.Count / _itemsPerPage);
 				CurrentPage = 1;
 			}
 		}
@@ -86,11 +85,16 @@ public class MainViewModel : PropertyChangedBase
 		}
 	}
 
-	public RelayCommand SearchCommand { get; }
 	public RelayCommand ClearCommand { get; }
 	public RelayCommand GoToPreviousPageCommand { get; }
 	public RelayCommand GoToNextPageCommand { get; }
 	public ICommand GoToPageCommand { get; }
+
+	private void SetItemsPerPage()
+	{
+		var dpiX = SystemParameters.PrimaryScreenWidth / SystemParameters.WorkArea.Width * 96;
+		_itemsPerPage = dpiX >= 96 ? 30 : 25;
+	}
 
 	private void ClearSearch()
 	{
@@ -100,8 +104,8 @@ public class MainViewModel : PropertyChangedBase
 
 	private void UpdatePagedItems()
 	{
-		var startIndex = (CurrentPage - 1) * ItemsPerPage;
-		PagedProducts = new ObservableCollection<Product>(Products.Skip(startIndex).Take(ItemsPerPage));
+		var startIndex = (CurrentPage - 1) * _itemsPerPage;
+		PagedProducts = new ObservableCollection<Product>(Products.Skip(startIndex).Take(_itemsPerPage));
 	}
 
 	public void GoToPage(object parameter)
