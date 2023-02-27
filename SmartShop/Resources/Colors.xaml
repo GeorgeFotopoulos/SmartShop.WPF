@@ -1,0 +1,6 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Color x:Key="PrimaryColor">DarkSlateGray</Color>
+	<Color x:Key="SecondaryColor">CadetBlue</Color>
+	<Color x:Key="AccentColor">Silver</Color>
+</ResourceDictionary>

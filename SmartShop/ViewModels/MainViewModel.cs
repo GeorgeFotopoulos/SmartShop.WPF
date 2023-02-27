@@ -1,6 +1,7 @@
 ﻿using SmartShop.Commands;
 using SmartShop.Models;
 using SmartShop.Services;
+using SmartShop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +26,6 @@ public class MainViewModel : PropertyChangedBase
 		_productService = productService;
 		_data = _productService.GetProducts();
 
-		// Initialize commands
 		ClearCommand = new RelayCommand(ClearSearch);
 		GoToPreviousPageCommand = new RelayCommand(() => CurrentPage--, () => CurrentPage > 1);
 		GoToNextPageCommand = new RelayCommand(() => CurrentPage++, () => CurrentPage < TotalPages && TotalPages > 0);
@@ -60,9 +60,11 @@ public class MainViewModel : PropertyChangedBase
 
 		set
 		{
-			if (SetField(ref _searchText, value))
+			if (SetField(ref _searchText, AutoCorrect.Normalize(value)))
 			{
-				Products = new ObservableCollection<Product>(_data.Where(p => p.ProductName.ToLower().Contains(SearchText.ToLower())));
+				CurrentPage = 0;
+				var searchTerms = _searchText.ToUpper().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+				Products = new ObservableCollection<Product>(_data.Where(p => searchTerms.All(s => AutoCorrect.Normalize(p.ProductName).ToUpper().Contains(s.Trim()))));
 			}
 		}
 	}
@@ -75,13 +77,12 @@ public class MainViewModel : PropertyChangedBase
 		{
 			if (SetField(ref _currentPage, value))
 			{
+				UpdatePagedItems();
+				LoadPageNumbers();
+				SetIsCurrent();
 				GoToPreviousPageCommand.RaiseCanExecuteChanged();
 				GoToNextPageCommand.RaiseCanExecuteChanged();
 			}
-
-			UpdatePagedItems();
-			LoadPageNumbers();
-			SetIsCurrent();
 		}
 	}
 

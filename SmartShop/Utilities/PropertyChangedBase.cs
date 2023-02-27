@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace SmartShop;
+namespace SmartShop.Utilities;
 
 // https://stackoverflow.com/questions/1315621/implementing-inotifypropertychanged-does-a-better-way-exist
 public class PropertyChangedBase : INotifyPropertyChanged

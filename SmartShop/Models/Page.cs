@@ -1,4 +1,6 @@
-﻿namespace SmartShop.Models;
+﻿using SmartShop.Utilities;
+
+namespace SmartShop.Models;
 
 public class Page : PropertyChangedBase
 {
