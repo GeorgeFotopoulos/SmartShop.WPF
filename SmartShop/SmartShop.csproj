@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
-		<Nullable>disable</Nullable>
 		<UseWPF>true</UseWPF>
-		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<OutputType>WinExe</OutputType>
+		<Nullable>disable</Nullable>
 		<FileVersion>1.0.0.0</FileVersion>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<ApplicationIcon>Resources\SmartShop.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
