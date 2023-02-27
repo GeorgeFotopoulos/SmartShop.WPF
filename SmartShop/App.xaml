@@ -323,7 +323,7 @@
 				<Setter Property="TextBlock.TextAlignment" Value="Center" />
 				<Setter Property="Background" Value="DarkSlateGray" />
 				<Setter Property="Foreground" Value="White" />
-				<Setter Property="MinWidth" Value="125" />
+				<Setter Property="MinWidth" Value="175" />
 				<Setter Property="MinHeight" Value="40" />
 				<Setter Property="ContentTemplate">
 					<Setter.Value>
@@ -433,7 +433,7 @@
 
 				<Style.Triggers>
 					<Trigger Property="IsSelected" Value="True">
-						<Setter Property="Background" Value="CadetBlue" />
+						<Setter Property="Background" Value="SlateGray" />
 						<Setter Property="Foreground" Value="White" />
 					</Trigger>
 				</Style.Triggers>
@@ -664,8 +664,8 @@
 				<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
 				<Setter Property="BorderBrush" Value="{StaticResource TextBoxBorder}" />
 				<Setter Property="BorderThickness" Value="1" />
-				<Setter Property="Padding" Value="3" />
-				<Setter Property="AllowDrop" Value="true" />
+				<Setter Property="Padding" Value="3 5" />
+				<Setter Property="AllowDrop" Value="True" />
 				<Setter Property="FocusVisualStyle" Value="{x:Null}" />
 				<Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
 				<Setter Property="Stylus.IsFlicksEnabled" Value="False" />
@@ -700,8 +700,8 @@
 												  ContentTemplate="{TemplateBinding WatermarkTemplate}"
 												  IsHitTestVisible="False"
 												  Visibility="Collapsed" />
-
 							</Grid>
+
 							<ControlTemplate.Triggers>
 								<MultiTrigger>
 									<MultiTrigger.Conditions>
@@ -711,11 +711,13 @@
 										<Setter TargetName="PART_WatermarkHost" Property="Visibility" Value="Visible" />
 									</MultiTrigger.Setters>
 								</MultiTrigger>
+
 								<MultiTrigger>
 									<MultiTrigger.Conditions>
 										<Condition Property="IsKeyboardFocusWithin" Value="True" />
 										<Condition Property="Text" Value="" />
 									</MultiTrigger.Conditions>
+
 									<MultiTrigger.EnterActions>
 										<BeginStoryboard>
 											<Storyboard>
@@ -726,6 +728,7 @@
 											</Storyboard>
 										</BeginStoryboard>
 									</MultiTrigger.EnterActions>
+
 									<MultiTrigger.ExitActions>
 										<BeginStoryboard>
 											<Storyboard>
@@ -736,6 +739,7 @@
 										</BeginStoryboard>
 									</MultiTrigger.ExitActions>
 								</MultiTrigger>
+
 								<Trigger Property="Text" Value="">
 									<Trigger.EnterActions>
 										<BeginStoryboard>
@@ -746,6 +750,7 @@
 											</Storyboard>
 										</BeginStoryboard>
 									</Trigger.EnterActions>
+
 									<Trigger.ExitActions>
 										<BeginStoryboard>
 											<Storyboard>
@@ -757,13 +762,16 @@
 										</BeginStoryboard>
 									</Trigger.ExitActions>
 								</Trigger>
+
 								<Trigger Property="IsMouseOver" Value="True">
 									<Setter TargetName="MouseOverVisual" Property="Opacity" Value="1" />
 								</Trigger>
+
 								<Trigger Property="IsFocused" Value="True">
 									<Setter TargetName="FocusVisual" Property="Opacity" Value="1" />
 								</Trigger>
-								<Trigger Property="IsEnabled" Value="false">
+
+								<Trigger Property="IsEnabled" Value="False">
 									<Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource TextBox_DisabledBorder}" />
 									<Setter TargetName="Border" Property="Background" Value="{StaticResource TextBox_DisabledBackground}" />
 									<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
