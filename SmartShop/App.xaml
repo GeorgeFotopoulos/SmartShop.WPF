@@ -7,7 +7,6 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="pack://application:,,,/BusyIndicator;component/Theme/Default.xaml" />
-				<ResourceDictionary Source="Resources/Colors.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 
 			<!--  Application Primary Color  -->
