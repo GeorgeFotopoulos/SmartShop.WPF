@@ -144,7 +144,6 @@ public class MainViewModel : PropertyChangedBase
 		{
 			if (CurrentPage <= TotalPages - 5)
 			{
-
 				Pages.Add(new Page("...", false));
 				var start = CurrentPage - 1;
 				var end = CurrentPage + 1;
