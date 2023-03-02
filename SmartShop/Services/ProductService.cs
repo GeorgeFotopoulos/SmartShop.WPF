@@ -2,7 +2,6 @@
 using SmartShop.Models;
 using System.Collections.Generic;
 using System.Data;
-using Xceed.Wpf.Toolkit.Primitives;
 
 namespace SmartShop.Services;
 
@@ -18,21 +17,29 @@ public class ProductService : IProductService
 	public List<Product> GetProducts()
 	{
 		var products = new List<Product>();
+		Product product;
 
 		var query = "SELECT * FROM products";
 		using (var reader = _databaseService.Query<IDataReader>(query))
 		{
 			while (reader.Read())
 			{
-				products.Add(new Product
+				product = new Product
 				{
-					Id = reader.GetInt32(0),
+					Code = reader.GetString(0),
 					Shop = reader.GetString(1),
 					Link = reader.GetString(2),
 					ProductName = reader.GetString(3),
-					Price = reader.GetString(4),
-					PricePerUnit = reader.GetString(5)
-				});
+					Price = reader.GetDouble(4),
+					PricePerUnit = reader.GetDouble(5),
+				};
+
+				if (!reader.IsDBNull(6))
+				{
+					product.MetricUnit = reader.GetString(6);
+				}
+
+				products.Add(product);
 			}
 		}
 
