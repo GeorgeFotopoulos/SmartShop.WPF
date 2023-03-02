@@ -31,13 +31,9 @@ public class ProductService : IProductService
 					Link = reader.GetString(2),
 					ProductName = reader.GetString(3),
 					Price = reader.GetDouble(4),
-					PricePerUnit = reader.GetDouble(5),
+					PricePerUnit = !reader.IsDBNull(5) ? reader.GetDouble(5) : 0,
+					MetricUnit = !reader.IsDBNull(6) ? reader.GetString(6) : null
 				};
-
-				if (!reader.IsDBNull(6))
-				{
-					product.MetricUnit = reader.GetString(6);
-				}
 
 				products.Add(product);
 			}
