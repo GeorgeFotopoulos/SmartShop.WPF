@@ -14,18 +14,17 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
 		<StackPanel Grid.Row="0"
-					Margin="10"
 					HorizontalAlignment="Center"
 					Orientation="Horizontal">
 			<xctk:WatermarkTextBox x:Name="SearchBox"
 								   Width="250"
 								   Height="30"
-								   Margin="10"
+                                   Margin="10"
 								   Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 								   Watermark="Αναζήτηση..." />
 			<Button Width="45"

@@ -59,10 +59,10 @@ public class MainViewModel : PropertyChangedBase
 
 		set
 		{
-			if (SetField(ref _searchText, AutoCorrect.Normalize(value)))
+			if (SetField(ref _searchText, value))
 			{
 				CurrentPage = 0;
-				var searchTerms = _searchText.ToUpper().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+				var searchTerms = AutoCorrect.Normalize(_searchText).ToUpper().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 				Products = new ObservableCollection<Product>(_data.Where(p => searchTerms.All(s => AutoCorrect.Normalize(p.ProductName).ToUpper().Contains(s.Trim()))));
 			}
 		}
@@ -92,8 +92,8 @@ public class MainViewModel : PropertyChangedBase
 
 	private void SetItemsPerPage()
 	{
-		var dpiX = SystemParameters.PrimaryScreenWidth / SystemParameters.WorkArea.Width * 96;
-		_itemsPerPage = dpiX >= 96 ? 30 : 25;
+		//var dpiX = SystemParameters.PrimaryScreenWidth / SystemParameters.WorkArea.Width * 96;
+		_itemsPerPage = SystemParameters.WorkArea.Width >= 1920 ? 30 : 24;
 	}
 
 	private void ClearSearch()

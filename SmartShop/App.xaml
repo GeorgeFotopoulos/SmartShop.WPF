@@ -323,7 +323,7 @@
 				<Setter Property="TextBlock.TextAlignment" Value="Center" />
 				<Setter Property="Background" Value="DarkSlateGray" />
 				<Setter Property="Foreground" Value="White" />
-				<Setter Property="MinWidth" Value="175" />
+				<Setter Property="MinWidth" Value="140" />
 				<Setter Property="MinHeight" Value="40" />
 				<Setter Property="ContentTemplate">
 					<Setter.Value>
