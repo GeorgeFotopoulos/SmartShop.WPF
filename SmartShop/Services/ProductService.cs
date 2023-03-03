@@ -30,9 +30,11 @@ public class ProductService : IProductService
 					Shop = reader.GetString(1),
 					Link = reader.GetString(2),
 					ProductName = reader.GetString(3),
-					Price = reader.GetDouble(4),
-					PricePerUnit = !reader.IsDBNull(5) ? reader.GetDouble(5) : 0,
-					MetricUnit = !reader.IsDBNull(6) ? reader.GetString(6) : null
+					StartingPrice = reader.GetDouble(4),
+					FinalPrice = reader.GetDouble(5),
+					PricePerUnit = !reader.IsDBNull(6) ? reader.GetDouble(6) : 0,
+					MetricUnit = !reader.IsDBNull(7) ? reader.GetString(7) : null,
+					Discounted = reader.GetBoolean(8),
 				};
 
 				products.Add(product);
