@@ -8,8 +8,9 @@ public class Product
 	public string ProductName { get; set; }
 	public double StartingPrice { get; set; }
 	public double FinalPrice { get; set; }
-	public double PricePerUnit { get; set; }
+	public double? PricePerUnit { get; set; }
 	public string MetricUnit { get; set; }
 	public bool Discounted { get; set; }
+	public string PricePerUnitWithMetricUnit => PricePerUnit != null ? $"{PricePerUnit:F2} {MetricUnit}" : null;
 	public double? DiscountPercentage => Discounted ? (StartingPrice - FinalPrice) / StartingPrice : null;
 }

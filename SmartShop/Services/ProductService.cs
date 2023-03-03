@@ -32,7 +32,7 @@ public class ProductService : IProductService
 					ProductName = reader.GetString(3),
 					StartingPrice = reader.GetDouble(4),
 					FinalPrice = reader.GetDouble(5),
-					PricePerUnit = !reader.IsDBNull(6) ? reader.GetDouble(6) : 0,
+					PricePerUnit = !reader.IsDBNull(6) ? reader.GetDouble(6) : null,
 					MetricUnit = !reader.IsDBNull(7) ? reader.GetString(7) : null,
 					Discounted = reader.GetBoolean(8),
 				};

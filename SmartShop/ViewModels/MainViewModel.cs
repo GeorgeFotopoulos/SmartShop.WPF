@@ -21,11 +21,13 @@ public class MainViewModel : PropertyChangedBase
 	private int _totalPages, _currentPage, _itemsPerPage;
 	private ObservableCollection<Product> _products, _pagedProducts;
 
-	public MainViewModel(IProductService productService)
+	public MainViewModel(IProductService productService, bool discountMode = false)
 	{
 		_productService = productService;
-		_data = _productService.GetProducts();
-		var t = _data.Where(x => !x.Discounted && x.Store.Equals("ΑΒ Βασιλόπουλος")).ToList();
+		_data = discountMode
+			? _productService.GetProducts().Where(x => x.Discounted).OrderByDescending(x => x.DiscountPercentage).ToList()
+			: _productService.GetProducts().OrderBy(x => x.PricePerUnit).ToList();
+
 		SetItemsPerPage();
 
 		ClearCommand = new RelayCommand(ClearSearch);
@@ -93,7 +95,6 @@ public class MainViewModel : PropertyChangedBase
 
 	private void SetItemsPerPage()
 	{
-		//var dpiX = SystemParameters.PrimaryScreenWidth / SystemParameters.WorkArea.Width * 96;
 		_itemsPerPage = SystemParameters.WorkArea.Width >= 1920 ? 30 : 24;
 	}
 
