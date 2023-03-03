@@ -25,7 +25,7 @@ public class MainViewModel : PropertyChangedBase
 	{
 		_productService = productService;
 		_data = _productService.GetProducts();
-		var t = _data.Where(x => !x.Discounted && x.Shop.Equals("ΑΒ Βασιλόπουλος")).ToList();
+		var t = _data.Where(x => !x.Discounted && x.Store.Equals("ΑΒ Βασιλόπουλος")).ToList();
 		SetItemsPerPage();
 
 		ClearCommand = new RelayCommand(ClearSearch);

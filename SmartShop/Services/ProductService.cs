@@ -27,7 +27,7 @@ public class ProductService : IProductService
 				product = new Product
 				{
 					Code = reader.GetString(0),
-					Shop = reader.GetString(1),
+					Store = reader.GetString(1),
 					Link = reader.GetString(2),
 					ProductName = reader.GetString(3),
 					StartingPrice = reader.GetDouble(4),

@@ -3,9 +3,9 @@
 public class Product
 {
 	public string Code { get; set; }
-	public string Shop { get; set; }
-	public string ProductName { get; set; }
+	public string Store { get; set; }
 	public string Link { get; set; }
+	public string ProductName { get; set; }
 	public double StartingPrice { get; set; }
 	public double FinalPrice { get; set; }
 	public double PricePerUnit { get; set; }
