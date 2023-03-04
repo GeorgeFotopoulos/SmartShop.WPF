@@ -8,8 +8,6 @@ namespace SmartShop.Views;
 
 public partial class MainWindow : Window
 {
-	private int _rowCount = 0;
-
 	public MainWindow(IProductService productService)
 	{
 		InitializeComponent();
@@ -25,10 +23,5 @@ public partial class MainWindow : Window
 		});
 
 		e.Handled = true;
-	}
-
-	private void DataGrid_LoadingRow(object sender, System.Windows.Controls.DataGridRowEventArgs e)
-	{
-		e.Row.Header = (++_rowCount).ToString();
 	}
 }
