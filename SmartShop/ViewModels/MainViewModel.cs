@@ -14,6 +14,7 @@ namespace SmartShop.ViewModels;
 public class MainViewModel : PropertyChangedBase
 {
 	private readonly List<Product> _data;
+	private readonly List<Correlation> _correlations;
 	private readonly IProductService _productService;
 
 	private string _searchText;
@@ -27,6 +28,7 @@ public class MainViewModel : PropertyChangedBase
 		_data = discountMode
 			? _productService.GetProducts().Where(x => x.Discounted).OrderByDescending(x => x.DiscountPercentage).ToList()
 			: _productService.GetProducts().OrderBy(x => x.PricePerUnit).ToList();
+		_correlations = _productService.GetCorrelations();
 
 		SetItemsPerPage();
 

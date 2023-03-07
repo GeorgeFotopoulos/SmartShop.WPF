@@ -19,7 +19,7 @@ public class ProductService : IProductService
 		var products = new List<Product>();
 		Product product;
 
-		var query = "SELECT * FROM products";
+		var query = "SELECT * FROM products;";
 		using (var reader = _databaseService.Query<IDataReader>(query))
 		{
 			while (reader.Read())
@@ -42,6 +42,29 @@ public class ProductService : IProductService
 		}
 
 		return products;
+	}
+
+	public List<Correlation> GetCorrelations()
+	{
+		var correlations = new List<Correlation>();
+		Correlation correlation;
+
+		var query = "SELECT * FROM correlations;";
+		using (var reader = _databaseService.Query<IDataReader>(query))
+		{
+			while (reader.Read())
+			{
+				correlation = new Correlation
+				{
+					Key = reader.GetString(0),
+					Value = reader.GetString(1)
+				};
+
+				correlations.Add(correlation);
+			}
+		}
+
+		return correlations;
 	}
 
 	//public void AddProduct(Product product)
