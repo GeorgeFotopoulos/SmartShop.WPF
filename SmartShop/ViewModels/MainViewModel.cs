@@ -2,6 +2,7 @@
 using SmartShop.Models;
 using SmartShop.Services;
 using SmartShop.Utilities;
+using SmartShop.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +15,6 @@ namespace SmartShop.ViewModels;
 public class MainViewModel : PropertyChangedBase
 {
 	private readonly List<Product> _data;
-	private readonly List<Correlation> _correlations;
 	private readonly IProductService _productService;
 
 	private string _searchText;
@@ -28,7 +28,6 @@ public class MainViewModel : PropertyChangedBase
 		_data = discountMode
 			? _productService.GetProducts().Where(x => x.Discounted).OrderByDescending(x => x.DiscountPercentage).ToList()
 			: _productService.GetProducts().OrderBy(x => x.PricePerUnit).ToList();
-		_correlations = _productService.GetCorrelations();
 
 		SetItemsPerPage();
 
@@ -36,6 +35,7 @@ public class MainViewModel : PropertyChangedBase
 		GoToPreviousPageCommand = new RelayCommand(() => CurrentPage--, () => CurrentPage > 1);
 		GoToNextPageCommand = new RelayCommand(() => CurrentPage++, () => CurrentPage < TotalPages && TotalPages > 0);
 		GoToPageCommand = new CommandHandler(page => GoToPage(page), true);
+		ViewShoppingCartCommand = new RelayCommand(ViewShoppingCart, () => CartItems.Count > 0);
 
 		Products = new ObservableCollection<Product>(_data);
 	}
@@ -94,7 +94,13 @@ public class MainViewModel : PropertyChangedBase
 	public RelayCommand ClearCommand { get; }
 	public RelayCommand GoToPreviousPageCommand { get; }
 	public RelayCommand GoToNextPageCommand { get; }
+	public RelayCommand ViewShoppingCartCommand { get; }
 	public ICommand GoToPageCommand { get; }
+
+	private void ViewShoppingCart()
+	{
+		new ShoppingCartWindow(_productService, CartItems).ShowDialog();
+	}
 
 	private void SetItemsPerPage()
 	{

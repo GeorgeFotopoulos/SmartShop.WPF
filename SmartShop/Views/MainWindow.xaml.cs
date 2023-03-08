@@ -38,11 +38,13 @@ public partial class MainWindow : Window
 			{
 				_viewModel.CartItems.Remove(product);
 				product.IsInCart = false;
+				_viewModel.ViewShoppingCartCommand.RaiseCanExecuteChanged();
 			}
 			else
 			{
 				_viewModel.CartItems.Add(product);
 				product.IsInCart = true;
+				_viewModel.ViewShoppingCartCommand.RaiseCanExecuteChanged();
 			}
 		}
 	}

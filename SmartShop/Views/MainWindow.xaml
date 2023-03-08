@@ -32,12 +32,24 @@
 								   Margin="10"
 								   Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 								   Watermark="Αναζήτηση..." />
+
 			<Button Width="45"
 					Height="30"
+					Margin="15"
 					Command="{Binding ClearCommand}"
 					Content="&#x2716;"
 					FontSize="12" />
 		</StackPanel>
+
+		<Button Width="45"
+				Margin="15 5"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Center"
+				Command="{Binding ViewShoppingCartCommand}"
+				FocusVisualStyle="{x:Null}"
+				Style="{StaticResource CustomButton}">
+			<Image Source="../Resources/shopping_cart.png" />
+		</Button>
 
 		<DataGrid Grid.Row="1"
 				  Margin="10"

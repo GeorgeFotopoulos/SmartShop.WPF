@@ -20,4 +20,8 @@
 		<PackageReference Include="Notification.Wpf" Version="7.0.0" />
 		<PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
 	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Resources\shopping_cart.png" />
+	</ItemGroup>
 </Project>
