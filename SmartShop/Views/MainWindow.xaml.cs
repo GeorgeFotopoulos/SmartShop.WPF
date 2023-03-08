@@ -1,22 +1,14 @@
-﻿using SmartShop.Models;
-using SmartShop.Services;
-using SmartShop.ViewModels;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Navigation;
 
 namespace SmartShop.Views;
 
 public partial class MainWindow : Window
 {
-	private readonly MainViewModel _viewModel;
-
-	public MainWindow(IProductService productService)
+	public MainWindow()
 	{
 		InitializeComponent();
-		_viewModel = new MainViewModel(productService);
-		DataContext = _viewModel;
 	}
 
 	private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -28,24 +20,5 @@ public partial class MainWindow : Window
 		});
 
 		e.Handled = true;
-	}
-
-	private void CartLink_Click(object sender, RoutedEventArgs e)
-	{
-		if (((Hyperlink)sender).Tag is Product product)
-		{
-			if (product.IsInCart)
-			{
-				_viewModel.CartItems.Remove(product);
-				product.IsInCart = false;
-				_viewModel.ViewShoppingCartCommand.RaiseCanExecuteChanged();
-			}
-			else
-			{
-				_viewModel.CartItems.Add(product);
-				product.IsInCart = true;
-				_viewModel.ViewShoppingCartCommand.RaiseCanExecuteChanged();
-			}
-		}
 	}
 }
