@@ -3,11 +3,11 @@ using System.Data;
 
 namespace SmartShop.DataAccess;
 
-public class SqliteService : IDatabaseService
+public class DatabaseService : IDatabaseService
 {
 	private readonly SqliteConnection connection;
 
-	public SqliteService(string databasePath)
+	public DatabaseService(string databasePath)
 	{
 		SQLitePCL.Batteries.Init();
 		var connectionString = $"DataSource={databasePath};Mode=ReadWriteCreate;";
