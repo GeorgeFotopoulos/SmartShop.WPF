@@ -8,11 +8,6 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<ApplicationIcon>Resources\SmartShop.ico</ApplicationIcon>
 	</PropertyGroup>
-	
-	<ItemGroup>
-		<EmbeddedResource Include="Resources\add-to-cart.jpg" />
-		<EmbeddedResource Include="Resources\remove-from-cart.jpg" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="BusyIndicator" Version="2.0.2.1" />
