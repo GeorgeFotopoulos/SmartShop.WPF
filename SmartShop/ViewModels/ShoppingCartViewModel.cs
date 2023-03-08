@@ -9,20 +9,23 @@ namespace SmartShop.ViewModels;
 
 public class ShoppingCartViewModel : PropertyChangedBase
 {
-	private readonly List<Product> _products;
+	private readonly ICartService _cartService;
 	private readonly IProductService _productService;
+
+	private readonly List<Product> _products;
 	private readonly List<Correlation> _correlations;
 	private ObservableCollection<Product> _sklavenitisProducts, _abProducts;
 
-	public ShoppingCartViewModel(IProductService productService, ObservableCollection<Product> cartItems)
+	public ShoppingCartViewModel(IProductService productService, ICartService cartService)
 	{
 		_productService = productService;
+		_cartService = cartService;
 
 		_products = _productService.GetProducts();
 		_correlations = _productService.GetCorrelations();
 
 		var data = new List<Product>();
-		foreach (var item in cartItems)
+		foreach (var item in _cartService.CartItems)
 		{
 			data.Add(item);
 			data.Add(_products.FirstOrDefault(x => x.Code == _correlations.Where(x => x.Key == item.Code)
