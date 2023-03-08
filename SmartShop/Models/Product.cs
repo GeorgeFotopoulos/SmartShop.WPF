@@ -1,7 +1,11 @@
-﻿namespace SmartShop.Models;
+﻿using SmartShop.Utilities;
 
-public class Product
+namespace SmartShop.Models;
+
+public class Product : PropertyChangedBase
 {
+	private bool _isInCart = false;
+
 	public string Code { get; set; }
 	public string Store { get; set; }
 	public string Link { get; set; }
@@ -13,4 +17,5 @@ public class Product
 	public bool Discounted { get; set; }
 	public string PricePerUnitWithMetricUnit => PricePerUnit != null ? $"{PricePerUnit:F2} {MetricUnit}" : null;
 	public double? DiscountPercentage => Discounted ? (StartingPrice - FinalPrice) / StartingPrice : null;
+	public bool IsInCart { get => _isInCart; set => SetField(ref _isInCart, value); }
 }

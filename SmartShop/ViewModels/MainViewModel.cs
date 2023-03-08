@@ -20,7 +20,7 @@ public class MainViewModel : PropertyChangedBase
 	private string _searchText;
 	private ObservableCollection<Page> _pages = new();
 	private int _totalPages, _currentPage, _itemsPerPage;
-	private ObservableCollection<Product> _products, _pagedProducts;
+	private ObservableCollection<Product> _products, _pagedProducts, _cartItems = new();
 
 	public MainViewModel(IProductService productService, bool discountMode = false)
 	{
@@ -43,6 +43,7 @@ public class MainViewModel : PropertyChangedBase
 	public int TotalPages { get => _totalPages; private set => SetField(ref _totalPages, value); }
 	public ObservableCollection<Page> Pages { get => _pages; set => SetField(ref _pages, value); }
 	public ObservableCollection<Product> PagedProducts { get => _pagedProducts; private set => SetField(ref _pagedProducts, value); }
+	public ObservableCollection<Product> CartItems { get => _cartItems; set => SetField(ref _cartItems, value); }
 
 	public ObservableCollection<Product> Products
 	{
