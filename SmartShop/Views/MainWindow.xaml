@@ -114,11 +114,11 @@
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<TextBlock>
-								<Hyperlink Click="CartLink_Click"
-										   FocusVisualStyle="{x:Null}"
-										   Tag="{Binding}">
-									<Run Text="{Binding IsInCart, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='Αφαίρεση|Προσθήκη'}" />
-								</Hyperlink>
+                <Hyperlink Command="{Binding DataContext.CartLinkClickCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+								FocusVisualStyle="{x:Null}"
+								CommandParameter="{Binding}">
+                    <Run Text="{Binding IsInCart, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='Αφαίρεση|Προσθήκη'}" />
+                </Hyperlink>
 							</TextBlock>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
