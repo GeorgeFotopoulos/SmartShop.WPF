@@ -1,4 +1,5 @@
-﻿using SmartShop.Commands;
+﻿using Autofac;
+using SmartShop.Commands;
 using SmartShop.Models;
 using SmartShop.Services;
 using SmartShop.Utilities;
@@ -15,16 +16,21 @@ namespace SmartShop.ViewModels;
 public class MainViewModel : PropertyChangedBase
 {
 	private readonly List<Product> _data;
+	private readonly ICartService _cartService;
 	private readonly IProductService _productService;
+	private readonly IComponentContext _componentContext;
 
 	private string _searchText;
 	private ObservableCollection<Page> _pages = new();
 	private int _totalPages, _currentPage, _itemsPerPage;
-	private ObservableCollection<Product> _products, _pagedProducts, _cartItems = new();
+	private ObservableCollection<Product> _products, _pagedProducts;
 
-	public MainViewModel(IProductService productService, bool discountMode = false)
+	public MainViewModel(IProductService productService, ICartService cartService, IComponentContext componentContext, bool discountMode)
 	{
 		_productService = productService;
+		_cartService = cartService;
+		_componentContext = componentContext;
+
 		_data = discountMode
 			? _productService.GetProducts().Where(x => x.Discounted).OrderByDescending(x => x.DiscountPercentage).ToList()
 			: _productService.GetProducts().OrderBy(x => x.PricePerUnit).ToList();
@@ -35,7 +41,8 @@ public class MainViewModel : PropertyChangedBase
 		GoToPreviousPageCommand = new RelayCommand(() => CurrentPage--, () => CurrentPage > 1);
 		GoToNextPageCommand = new RelayCommand(() => CurrentPage++, () => CurrentPage < TotalPages && TotalPages > 0);
 		GoToPageCommand = new CommandHandler(page => GoToPage(page), true);
-		ViewShoppingCartCommand = new RelayCommand(ViewShoppingCart, () => CartItems.Count > 0);
+		ViewShoppingCartCommand = new RelayCommand(ViewShoppingCart, () => _cartService.CartItems.Count > 0);
+		CartLinkClickCommand = new CommandHandler(product => ChangeProductCartState(product), true);
 
 		Products = new ObservableCollection<Product>(_data);
 	}
@@ -43,7 +50,6 @@ public class MainViewModel : PropertyChangedBase
 	public int TotalPages { get => _totalPages; private set => SetField(ref _totalPages, value); }
 	public ObservableCollection<Page> Pages { get => _pages; set => SetField(ref _pages, value); }
 	public ObservableCollection<Product> PagedProducts { get => _pagedProducts; private set => SetField(ref _pagedProducts, value); }
-	public ObservableCollection<Product> CartItems { get => _cartItems; set => SetField(ref _cartItems, value); }
 
 	public ObservableCollection<Product> Products
 	{
@@ -95,11 +101,35 @@ public class MainViewModel : PropertyChangedBase
 	public RelayCommand GoToPreviousPageCommand { get; }
 	public RelayCommand GoToNextPageCommand { get; }
 	public RelayCommand ViewShoppingCartCommand { get; }
+	public ICommand CartLinkClickCommand { get; }
 	public ICommand GoToPageCommand { get; }
+
+	private void ChangeProductCartState(object parameter)
+	{
+		if (parameter is Product product)
+		{
+			if (product.IsInCart)
+			{
+				_cartService.RemoveFromCart(product);
+				ViewShoppingCartCommand.RaiseCanExecuteChanged();
+			}
+			else
+			{
+				_cartService.AddToCart(product);
+				ViewShoppingCartCommand.RaiseCanExecuteChanged();
+			}
+		}
+	}
 
 	private void ViewShoppingCart()
 	{
-		new ShoppingCartWindow(_productService, CartItems).ShowDialog();
+		// Resolves the ShoppingCartViewModel instance from the container
+		var shoppingCartViewModel = _componentContext.Resolve<ShoppingCartViewModel>();
+
+		// Resolves the ShoppingCartWindow instance from the container
+		var shoppingCartWindow = _componentContext.Resolve<ShoppingCartWindow>();
+		shoppingCartWindow.DataContext = shoppingCartViewModel;
+		shoppingCartWindow.Show();
 	}
 
 	private void SetItemsPerPage()
