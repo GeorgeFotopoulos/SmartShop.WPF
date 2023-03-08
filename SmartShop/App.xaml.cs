@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Autofac;
+using Autofac.Core;
 using SmartShop.DataAccess;
 using SmartShop.Services;
+using SmartShop.ViewModels;
 using SmartShop.Views;
 using System;
 using System.IO;
@@ -12,26 +14,60 @@ namespace SmartShop;
 
 public partial class App : Application
 {
-	private readonly ServiceProvider _serviceProvider;
-
-	public App()
-	{
-		var services = new ServiceCollection();
-		ConfigureServices(services);
-		_serviceProvider = services.BuildServiceProvider();
-	}
-
-	private static void ConfigureServices(ServiceCollection services)
-	{
-		var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "database.db");
-		services.AddSingleton<IDatabaseService>(new SqliteService(databasePath));
-		services.AddScoped<IProductService, ProductService>();
-		services.AddSingleton<MainWindow>();
-	}
+	private IContainer _container;
 
 	private void OnStartup(object sender, StartupEventArgs e)
 	{
-		var mainWindow = _serviceProvider.GetService<MainWindow>();
+		// Creates the container builder
+		var builder = new ContainerBuilder();
+
+		// Registers Services & Dependencies
+		builder.RegisterType<DatabaseService>().As<IDatabaseService>()
+			.WithParameter("databasePath", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "database.db"));
+
+		builder.RegisterType<CartService>().As<ICartService>().SingleInstance();
+		builder.RegisterType<ProductService>().As<IProductService>()
+			.WithParameter(new ResolvedParameter(
+				(pi, ctx) => pi.ParameterType == typeof(IDatabaseService),
+				(pi, ctx) => ctx.Resolve<IDatabaseService>()
+			));
+
+		// Registers ViewModels
+		builder.RegisterType<MainViewModel>().AsSelf()
+			.WithParameter(new NamedParameter("discountMode", true))
+			.WithParameter(new ResolvedParameter(
+				(pi, ctx) => pi.ParameterType == typeof(IProductService),
+				(pi, ctx) => ctx.Resolve<IProductService>()))
+			.WithParameter(new ResolvedParameter(
+				(pi, ctx) => pi.ParameterType == typeof(ICartService),
+				(pi, ctx) => ctx.Resolve<ICartService>()))
+			.WithParameter(new ResolvedParameter(
+				(pi, ctx) => pi.ParameterType == typeof(IComponentContext),
+				(pi, ctx) => ctx.Resolve<IComponentContext>()))
+			.SingleInstance();
+
+		builder.RegisterType<ShoppingCartViewModel>().AsSelf()
+			.WithParameter(new ResolvedParameter(
+				(pi, ctx) => pi.ParameterType == typeof(IProductService),
+				(pi, ctx) => ctx.Resolve<IProductService>()))
+			.WithParameter(new ResolvedParameter(
+				(pi, ctx) => pi.ParameterType == typeof(ICartService),
+				(pi, ctx) => ctx.Resolve<ICartService>()))
+			.InstancePerDependency();
+
+		// Registers Views
+		builder.RegisterType<MainWindow>().AsSelf();
+		builder.RegisterType<ShoppingCartWindow>().AsSelf();
+
+		// Builds the container
+		_container = builder.Build();
+
+		// Resolves the MainViewModel instance from the container
+		var mainViewModel = _container.Resolve<MainViewModel>();
+
+		// Resolves the MainWindow instance from the container
+		var mainWindow = _container.Resolve<MainWindow>();
+		mainWindow.DataContext = mainViewModel;
 		mainWindow.Show();
 	}
 
