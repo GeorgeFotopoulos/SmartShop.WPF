@@ -4,7 +4,8 @@
 			 xmlns:converters="clr-namespace:SmartShop.Converters"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 Width="400"
+			 MinHeight="100"
+			 d:Background="WhiteSmoke"
 			 DataContext="{Binding}"
 			 mc:Ignorable="d">
 	<UserControl.Resources>
@@ -17,14 +18,20 @@
 			BorderThickness="1"
 			CornerRadius="10">
 		<StackPanel>
-			<TextBlock HorizontalAlignment="Left"
-					   Cursor="Hand"
-					   Foreground="Blue"
-					   MouseLeftButtonDown="Hyperlink_OnClick"
-					   TextDecorations="Underline"
-					   ToolTip="Click to open product link in browser">
-				<Run Text="{Binding ProductName}" />
-			</TextBlock>
+			<StackPanel Orientation="Horizontal">
+				<CheckBox Margin="0 0 5 0"
+						  IsChecked="{Binding IsInCart, Mode=TwoWay}" />
+
+				<TextBlock HorizontalAlignment="Left"
+						   d:Text="Product Name"
+						   Cursor="Hand"
+						   Foreground="Blue"
+						   MouseLeftButtonDown="Hyperlink_OnClick"
+						   TextDecorations="Underline"
+						   ToolTip="Click to open product link in browser">
+					<Run Text="{Binding ProductName}" />
+				</TextBlock>
+			</StackPanel>
 			<StackPanel Orientation="Horizontal">
 				<TextBlock Text="Starting Price: " />
 				<TextBlock Text="{Binding StartingPrice, StringFormat='{}{0:F2} €'}" />
