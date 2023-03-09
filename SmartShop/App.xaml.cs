@@ -46,7 +46,7 @@ public partial class App : Application
 				(pi, ctx) => ctx.Resolve<IComponentContext>()))
 			.SingleInstance();
 
-		builder.RegisterType<ShoppingCartViewModel>().AsSelf()
+		builder.RegisterType<CartViewModel>().AsSelf()
 			.WithParameter(new ResolvedParameter(
 				(pi, ctx) => pi.ParameterType == typeof(IProductService),
 				(pi, ctx) => ctx.Resolve<IProductService>()))
@@ -57,7 +57,7 @@ public partial class App : Application
 
 		// Registers Views
 		builder.RegisterType<MainWindow>().AsSelf();
-		builder.RegisterType<ShoppingCartWindow>().AsSelf();
+		builder.RegisterType<CartWindow>().AsSelf();
 
 		// Builds the container
 		_container = builder.Build();

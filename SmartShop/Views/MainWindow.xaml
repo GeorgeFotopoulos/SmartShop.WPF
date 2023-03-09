@@ -45,7 +45,7 @@
 				Margin="15 5"
 				HorizontalAlignment="Right"
 				VerticalAlignment="Center"
-				Command="{Binding ViewShoppingCartCommand}"
+				Command="{Binding ViewCartCommand}"
 				FocusVisualStyle="{x:Null}"
 				Style="{StaticResource CustomButton}">
 			<Image Source="../Resources/shopping_cart.png" />
@@ -114,11 +114,11 @@
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<TextBlock>
-                <Hyperlink Command="{Binding DataContext.CartLinkClickCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-								FocusVisualStyle="{x:Null}"
-								CommandParameter="{Binding}">
-                    <Run Text="{Binding IsInCart, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='Αφαίρεση|Προσθήκη'}" />
-                </Hyperlink>
+								<Hyperlink Command="{Binding DataContext.CartLinkClickCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+										   CommandParameter="{Binding}"
+										   FocusVisualStyle="{x:Null}">
+									<Run Text="{Binding IsInCart, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='Αφαίρεση|Προσθήκη'}" />
+								</Hyperlink>
 							</TextBlock>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>

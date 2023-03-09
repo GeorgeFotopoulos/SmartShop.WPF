@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace SmartShop.ViewModels;
 
-public class ShoppingCartViewModel : PropertyChangedBase
+public class CartViewModel : PropertyChangedBase
 {
 	private readonly ICartService _cartService;
 	private readonly IProductService _productService;
@@ -22,7 +22,7 @@ public class ShoppingCartViewModel : PropertyChangedBase
 	private readonly List<Correlation> _correlations;
 	private ObservableCollection<Product> _sklavenitisProducts = new(), _abProducts = new();
 
-	public ShoppingCartViewModel(IProductService productService, ICartService cartService)
+	public CartViewModel(IProductService productService, ICartService cartService)
 	{
 		_productService = productService;
 		_cartService = cartService;
@@ -90,7 +90,7 @@ public class ShoppingCartViewModel : PropertyChangedBase
 		var saveFileDialog = new SaveFileDialog
 		{
 			Filter = "Text Files (*.txt)|*.txt",
-			FileName = "ShoppingCart.txt"
+			FileName = "CartExport.txt"
 		};
 
 		if (saveFileDialog.ShowDialog() == true)

@@ -2,9 +2,9 @@
 
 namespace SmartShop.Views;
 
-public partial class ShoppingCartWindow : Window
+public partial class CartWindow : Window
 {
-	public ShoppingCartWindow()
+	public CartWindow()
 	{
 		InitializeComponent();
 	}

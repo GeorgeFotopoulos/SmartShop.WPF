@@ -41,7 +41,7 @@ public class MainViewModel : PropertyChangedBase
 		GoToPreviousPageCommand = new RelayCommand(() => CurrentPage--, () => CurrentPage > 1);
 		GoToNextPageCommand = new RelayCommand(() => CurrentPage++, () => CurrentPage < TotalPages && TotalPages > 0);
 		GoToPageCommand = new CommandHandler(page => GoToPage(page), true);
-		ViewShoppingCartCommand = new RelayCommand(ViewShoppingCart, () => _cartService.CartItems.Count > 0);
+		ViewCartCommand = new RelayCommand(ViewCart, () => _cartService.CartItems.Count > 0);
 		CartLinkClickCommand = new CommandHandler(product => ChangeProductCartState(product), true);
 
 		Products = new ObservableCollection<Product>(_data);
@@ -100,7 +100,7 @@ public class MainViewModel : PropertyChangedBase
 	public RelayCommand ClearCommand { get; }
 	public RelayCommand GoToPreviousPageCommand { get; }
 	public RelayCommand GoToNextPageCommand { get; }
-	public RelayCommand ViewShoppingCartCommand { get; }
+	public RelayCommand ViewCartCommand { get; }
 	public ICommand CartLinkClickCommand { get; }
 	public ICommand GoToPageCommand { get; }
 
@@ -111,25 +111,25 @@ public class MainViewModel : PropertyChangedBase
 			if (product.IsInCart)
 			{
 				_cartService.RemoveFromCart(product);
-				ViewShoppingCartCommand.RaiseCanExecuteChanged();
+				ViewCartCommand.RaiseCanExecuteChanged();
 			}
 			else
 			{
 				_cartService.AddToCart(product);
-				ViewShoppingCartCommand.RaiseCanExecuteChanged();
+				ViewCartCommand.RaiseCanExecuteChanged();
 			}
 		}
 	}
 
-	private void ViewShoppingCart()
+	private void ViewCart()
 	{
-		// Resolves the ShoppingCartViewModel instance from the container
-		var shoppingCartViewModel = _componentContext.Resolve<ShoppingCartViewModel>();
+		// Resolves the CartViewModel instance from the container
+		var cartViewModel = _componentContext.Resolve<CartViewModel>();
 
-		// Resolves the ShoppingCartWindow instance from the container
-		var shoppingCartWindow = _componentContext.Resolve<ShoppingCartWindow>();
-		shoppingCartWindow.DataContext = shoppingCartViewModel;
-		shoppingCartWindow.Show();
+		// Resolves the CartWindow instance from the container
+		var cartWindow = _componentContext.Resolve<CartWindow>();
+		cartWindow.DataContext = cartViewModel;
+		cartWindow.Show();
 	}
 
 	private void SetItemsPerPage()
