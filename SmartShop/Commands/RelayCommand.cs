@@ -5,12 +5,12 @@ namespace SmartShop.Commands;
 
 public class RelayCommand : ICommand
 {
-	private readonly Action _execute;
+	private readonly Action<object> _action;
 	private readonly Func<bool> _canExecute;
 
-	public RelayCommand(Action execute, Func<bool> canExecute = null)
+	public RelayCommand(Action<object> action, Func<bool> canExecute = null)
 	{
-		_execute = execute;
+		_action = action ?? throw new ArgumentNullException(nameof(action));
 		_canExecute = canExecute ?? (() => true);
 	}
 
@@ -23,7 +23,7 @@ public class RelayCommand : ICommand
 
 	public void Execute(object parameter)
 	{
-		_execute();
+		_action(parameter);
 	}
 
 	public void RaiseCanExecuteChanged()

@@ -37,12 +37,12 @@ public class MainViewModel : PropertyChangedBase
 
 		SetItemsPerPage();
 
-		ClearCommand = new RelayCommand(ClearSearch);
-		GoToPreviousPageCommand = new RelayCommand(() => CurrentPage--, () => CurrentPage > 1);
-		GoToNextPageCommand = new RelayCommand(() => CurrentPage++, () => CurrentPage < TotalPages && TotalPages > 0);
-		GoToPageCommand = new CommandHandler(page => GoToPage(page), true);
-		ViewCartCommand = new RelayCommand(ViewCart, () => _cartService.ShoppingCart.Items.Count > 0);
-		CartLinkClickCommand = new CommandHandler(product => ChangeProductCartState(product), true);
+		ClearCommand = new RelayCommand(obj => ClearSearch(), () => true);
+		GoToPreviousPageCommand = new RelayCommand(obj => CurrentPage--, () => CurrentPage > 1);
+		GoToNextPageCommand = new RelayCommand(obj => CurrentPage++, () => CurrentPage < TotalPages && TotalPages > 0);
+		GoToPageCommand = new RelayCommand(page => GoToPage(page), () => true);
+		ViewCartCommand = new RelayCommand(obj => ViewCart(), () => _cartService.ShoppingCart.Items.Count > 0);
+		CartLinkClickCommand = new RelayCommand(product => ChangeProductCartState(product), () => true);
 
 		Products = new ObservableCollection<Product>(_data);
 	}
@@ -101,8 +101,8 @@ public class MainViewModel : PropertyChangedBase
 	public RelayCommand GoToPreviousPageCommand { get; }
 	public RelayCommand GoToNextPageCommand { get; }
 	public RelayCommand ViewCartCommand { get; }
-	public ICommand CartLinkClickCommand { get; }
-	public ICommand GoToPageCommand { get; }
+	public RelayCommand CartLinkClickCommand { get; }
+	public RelayCommand GoToPageCommand { get; }
 
 	private void ChangeProductCartState(object parameter)
 	{
