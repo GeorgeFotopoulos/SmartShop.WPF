@@ -9,7 +9,7 @@ public class PropertyChangedBase : INotifyPropertyChanged
 {
 	public event PropertyChangedEventHandler PropertyChanged;
 
-	private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+	protected void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
 	{
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
