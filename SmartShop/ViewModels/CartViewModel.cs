@@ -9,7 +9,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Input;
 
 namespace SmartShop.ViewModels;
 
@@ -27,11 +26,13 @@ public class CartViewModel : PropertyChangedBase
 		_productService = productService;
 		_cartService = cartService;
 
+		_cartService.ShoppingCart.PropertyChanged += CartPropertyChanged;
+
 		_products = _productService.GetProducts();
 		_correlations = _productService.GetCorrelations();
 
 		var data = new List<Product>();
-		foreach (var item in _cartService.CartItems)
+		foreach (var item in _cartService.ShoppingCart.Items)
 		{
 			data.Add(item);
 			data.Add(_products.FirstOrDefault(x => x.Code == _correlations.Where(x => x.Key == item.Code)
@@ -42,17 +43,17 @@ public class CartViewModel : PropertyChangedBase
 		SklavenitisProducts = new(data.Where(x => x.Store.Equals("Σκλαβενίτης")));
 		AbProducts = new(data.Where(x => x.Store.Equals("ΑΒ Βασιλόπουλος")));
 
-		foreach (var product in _sklavenitisProducts.Concat(_abProducts))
+		foreach (var product in SklavenitisProducts.Concat(AbProducts))
 		{
 			product.PropertyChanged += OnProductPropertyChanged;
 		}
 
-		ExportCartCommand = new RelayCommand(ExportCart, () => SklavenitisProducts.Concat(AbProducts).Any(product => product.IsInCart));
+		ExportCartCommand = new RelayCommand(ExportCart, () => _cartService.ShoppingCart.Items.Any());
 	}
 
 	public ObservableCollection<Product> SklavenitisProducts { get => _sklavenitisProducts; set => SetField(ref _sklavenitisProducts, value); }
 	public ObservableCollection<Product> AbProducts { get => _abProducts; set => SetField(ref _abProducts, value); }
-	public double TotalPrice => SklavenitisProducts.Concat(AbProducts).Where(product => product.IsInCart).Sum(product => product.FinalPrice);
+	public double TotalPrice => _cartService.ShoppingCart.TotalPrice;
 
 	public RelayCommand ExportCartCommand { get; }
 
@@ -64,17 +65,27 @@ public class CartViewModel : PropertyChangedBase
 			if (product.IsInCart)
 			{
 				_cartService.AddToCart(product);
+				ExportCartCommand.RaiseCanExecuteChanged();
 			}
 			else
 			{
 				_cartService.RemoveFromCart(product);
+				ExportCartCommand.RaiseCanExecuteChanged();
 			}
+		}
+	}
+
+	private void CartPropertyChanged(object sender, PropertyChangedEventArgs e)
+	{
+		if (e.PropertyName == nameof(Cart.TotalPrice))
+		{
+			NotifyPropertyChanged(nameof(TotalPrice));
 		}
 	}
 
 	public void ExportCart()
 	{
-		var productsInCart = SklavenitisProducts.Concat(AbProducts).Where(product => product.IsInCart);
+		var productsInCart = _cartService.ShoppingCart.Items;
 		var fileContent = new StringBuilder();
 
 		foreach (var product in productsInCart)
