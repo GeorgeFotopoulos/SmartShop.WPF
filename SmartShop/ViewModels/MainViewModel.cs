@@ -41,7 +41,7 @@ public class MainViewModel : PropertyChangedBase
 		GoToPreviousPageCommand = new RelayCommand(() => CurrentPage--, () => CurrentPage > 1);
 		GoToNextPageCommand = new RelayCommand(() => CurrentPage++, () => CurrentPage < TotalPages && TotalPages > 0);
 		GoToPageCommand = new CommandHandler(page => GoToPage(page), true);
-		ViewCartCommand = new RelayCommand(ViewCart, () => _cartService.CartItems.Count > 0);
+		ViewCartCommand = new RelayCommand(ViewCart, () => _cartService.ShoppingCart.Items.Count > 0);
 		CartLinkClickCommand = new CommandHandler(product => ChangeProductCartState(product), true);
 
 		Products = new ObservableCollection<Product>(_data);
@@ -128,8 +128,14 @@ public class MainViewModel : PropertyChangedBase
 
 		// Resolves the CartWindow instance from the container
 		var cartWindow = _componentContext.Resolve<CartWindow>();
+		cartWindow.Closed += CartWindowClosed;
 		cartWindow.DataContext = cartViewModel;
 		cartWindow.Show();
+	}
+
+	private void CartWindowClosed(object sender, EventArgs e)
+	{
+		ViewCartCommand.RaiseCanExecuteChanged();
 	}
 
 	private void SetItemsPerPage()
