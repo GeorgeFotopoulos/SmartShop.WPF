@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
 
 namespace SmartShop.ViewModels;
 
@@ -124,7 +123,7 @@ public class MainViewModel : PropertyChangedBase
 	private void ViewCart()
 	{
 		// Resolves the CartViewModel instance from the container
-		var cartViewModel = _componentContext.Resolve<CartViewModel>();
+		var cartViewModel = _componentContext.Resolve<CartViewModel>(new NamedParameter("products", _data));
 
 		// Resolves the CartWindow instance from the container
 		var cartWindow = _componentContext.Resolve<CartWindow>();

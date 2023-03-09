@@ -22,27 +22,31 @@ public class CartViewModel : PropertyChangedBase
 	private ObservableCollection<Product> _abProducts = new ObservableCollection<Product>();
 	private ObservableCollection<Product> _sklavenitisProducts = new ObservableCollection<Product>();
 
-	public CartViewModel(IProductService productService, ICartService cartService)
+	public CartViewModel(IProductService productService, ICartService cartService, List<Product> products)
 	{
 		_productService = productService;
 		_cartService = cartService;
-
 		_cartService.GetCart().PropertyChanged += CartPropertyChanged;
-
-		_products = _productService.GetProducts();
+		_products = products;
 		_correlations = _productService.GetCorrelations();
 
 		var data = new List<Product>();
 		foreach (var item in _cartService.GetCart().Items)
 		{
+			if (data.Contains(item))
+			{
+				continue;
+			}
+
 			data.Add(item);
-			data.Add(_products.FirstOrDefault(x => x.Code == _correlations.Where(x => x.Key == item.Code)
-																 .Select(x => x.Value)
-																 .FirstOrDefault()));
+
+			// In case of MainViewModel running with discountMode true, then this code provides error, because some of the codes from correlations lead to null
+			var correlatedProduct = _products.FirstOrDefault(x => x.Code == _correlations.Where(x => x.Key == item.Code).Select(x => x.Value).FirstOrDefault());
+			data.Add(correlatedProduct);
 		}
 
-		SklavenitisProducts = new(data.Where(x => x.Store.Equals("Σκλαβενίτης")));
-		AbProducts = new(data.Where(x => x.Store.Equals("ΑΒ Βασιλόπουλος")));
+		SklavenitisProducts = new ObservableCollection<Product>(data.Where(x => x.Store.Equals("Σκλαβενίτης")));
+		AbProducts = new ObservableCollection<Product>(data.Where(x => x.Store.Equals("ΑΒ Βασιλόπουλος")));
 
 		foreach (var product in SklavenitisProducts.Concat(AbProducts))
 		{
