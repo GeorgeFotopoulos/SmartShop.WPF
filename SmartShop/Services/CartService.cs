@@ -4,27 +4,27 @@ namespace SmartShop.Services;
 
 public class CartService : ICartService
 {
-	private readonly Cart _shoppingCart = new Cart();
+	private readonly Cart _cart = new Cart();
 
 	public Cart GetCart()
 	{
-		return _shoppingCart;
+		return _cart;
 	}
 
 	public void AddToCart(Product product)
 	{
-		if (!_shoppingCart.Items.Contains(product))
+		if (!_cart.Items.Contains(product))
 		{
-			_shoppingCart.Items.Add(product);
+			_cart.Items.Add(product);
 			product.IsInCart = true;
 		}
 	}
 
 	public void RemoveFromCart(Product product)
 	{
-		if (_shoppingCart.Items.Contains(product))
+		if (_cart.Items.Contains(product))
 		{
-			_shoppingCart.Items.Remove(product);
+			_cart.Items.Remove(product);
 			product.IsInCart = false;
 		}
 	}
