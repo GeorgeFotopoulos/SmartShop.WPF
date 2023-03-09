@@ -7,8 +7,8 @@
 		xmlns:uc="clr-namespace:SmartShop.Views.UserControl"
 		xmlns:viewmodels="clr-namespace:SmartShop.ViewModels"
 		Title="Έξυπνο καλάθι"
-		Width="1000"
-		Height="600"
+		Width="1200"
+		Height="800"
 		d:DataContext="{d:DesignInstance Type=viewmodels:ShoppingCartViewModel}"
 		ResizeMode="NoResize"
 		mc:Ignorable="d">
@@ -19,15 +19,26 @@
 	<ScrollViewer HorizontalScrollBarVisibility="Auto"
 				  VerticalScrollBarVisibility="Auto">
 		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
-			<StackPanel Grid.Column="0">
-				<TextBlock Margin="10"
+			<StackPanel Grid.Row="0"
+						Grid.Column="0">
+				<TextBlock Margin="5"
+						   FontSize="18"
 						   FontWeight="Bold"
 						   Text="Σκλαβενίτης" />
+				<TextBlock Margin="5"
+						   FontSize="14"
+						   FontWeight="DemiBold"
+						   Text="{Binding SklavenitisProducts, Converter={StaticResource SumConverter}, StringFormat='Σύνολο: {0:F2} €'}" />
 				<ItemsControl ItemsSource="{Binding SklavenitisProducts}">
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>
@@ -35,15 +46,18 @@
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
-				<TextBlock Margin="10"
-						   FontWeight="Bold"
-						   Text="{Binding SklavenitisProducts, Converter={StaticResource SumConverter}, StringFormat='Σύνολο: {0:F2} €'}" />
 			</StackPanel>
 
-			<StackPanel Grid.Column="1">
-				<TextBlock Margin="10"
+			<StackPanel Grid.Row="0"
+						Grid.Column="1">
+				<TextBlock Margin="5"
+						   FontSize="18"
 						   FontWeight="Bold"
 						   Text="ΑΒ Βασιλόπουλος" />
+				<TextBlock Margin="5"
+						   FontSize="14"
+						   FontWeight="DemiBold"
+						   Text="{Binding AbProducts, Converter={StaticResource SumConverter}, StringFormat='Σύνολο: {0:F2} €'}" />
 				<ItemsControl ItemsSource="{Binding AbProducts}">
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>
@@ -51,10 +65,14 @@
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
-				<TextBlock Margin="10"
-						   FontWeight="Bold"
-						   Text="{Binding AbProducts, Converter={StaticResource SumConverter}, StringFormat='Σύνολο: {0:F2} €'}" />
 			</StackPanel>
+
+			<TextBlock Grid.Row="1"
+					   Grid.ColumnSpan="2"
+					   Margin="15"
+					   FontSize="18"
+					   FontWeight="DemiBold"
+					   Text="{Binding TotalPrice, StringFormat='Σύνολο: {0:F2} €'}" />
 		</Grid>
 	</ScrollViewer>
 </Window>
