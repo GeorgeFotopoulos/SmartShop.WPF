@@ -1,10 +1,12 @@
 ﻿using Autofac;
 using Autofac.Core;
 using SmartShop.DataAccess;
+using SmartShop.Models;
 using SmartShop.Services;
 using SmartShop.ViewModels;
 using SmartShop.Views;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,7 +36,7 @@ public partial class App : Application
 
 		// Registers ViewModels
 		builder.RegisterType<MainViewModel>().AsSelf()
-			.WithParameter(new NamedParameter("discountMode", true))
+			.WithParameter(new NamedParameter("discountMode", false))
 			.WithParameter(new ResolvedParameter(
 				(pi, ctx) => pi.ParameterType == typeof(IProductService),
 				(pi, ctx) => ctx.Resolve<IProductService>()))
@@ -53,6 +55,10 @@ public partial class App : Application
 			.WithParameter(new ResolvedParameter(
 				(pi, ctx) => pi.ParameterType == typeof(ICartService),
 				(pi, ctx) => ctx.Resolve<ICartService>()))
+			.WithParameter(
+			 new ResolvedParameter(
+				(pi, ctx) => pi.Name == "products",
+				(pi, ctx) => ctx.Resolve<List<Product>>()))
 			.InstancePerDependency();
 
 		// Registers Views
