@@ -54,7 +54,7 @@ public class CartViewModel : PropertyChangedBase
 	public ObservableCollection<Product> AbProducts { get => _abProducts; set => SetField(ref _abProducts, value); }
 	public double TotalPrice => SklavenitisProducts.Concat(AbProducts).Where(product => product.IsInCart).Sum(product => product.FinalPrice);
 
-	public ICommand ExportCartCommand { get; }
+	public RelayCommand ExportCartCommand { get; }
 
 	private void OnProductPropertyChanged(object sender, PropertyChangedEventArgs e)
 	{
@@ -62,6 +62,7 @@ public class CartViewModel : PropertyChangedBase
 		if (e.PropertyName == nameof(Product.IsInCart))
 		{
 			NotifyPropertyChanged(nameof(TotalPrice));
+			ExportCartCommand.RaiseCanExecuteChanged();
 		}
 	}
 
