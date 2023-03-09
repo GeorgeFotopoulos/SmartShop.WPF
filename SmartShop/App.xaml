@@ -802,6 +802,85 @@
 					</Setter.Value>
 				</Setter>
 			</Style>
+
+			<!--  Define colors and brushes  -->
+			<SolidColorBrush x:Key="CheckBoxBackground"
+							 Color="Transparent" />
+			<SolidColorBrush x:Key="CheckBoxBorder"
+							 Color="#CCCCCC" />
+			<SolidColorBrush x:Key="CheckBoxForeground"
+							 Color="#333333" />
+			<SolidColorBrush x:Key="CheckBoxCheckmark"
+							 Color="#007ACC" />
+			<SolidColorBrush x:Key="CheckBoxBackgroundMouseOver"
+							 Color="#F5F5F5" />
+			<SolidColorBrush x:Key="CheckBoxBorderMouseOver"
+							 Color="#B2B2B2" />
+			<SolidColorBrush x:Key="CheckBoxBackgroundDisabled"
+							 Color="#F7F7F7" />
+			<SolidColorBrush x:Key="CheckBoxBorderDisabled"
+							 Color="#D9D9D9" />
+			<SolidColorBrush x:Key="CheckBoxForegroundDisabled"
+							 Color="#A5A5A5" />
+
+			<!--  CheckBox Style  -->
+			<Style TargetType="{x:Type CheckBox}">
+				<Setter Property="Margin" Value="5" />
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="VerticalAlignment" Value="Center" />
+				<Setter Property="HorizontalAlignment" Value="Left" />
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type CheckBox}">
+							<StackPanel Orientation="Horizontal">
+								<Border Name="border"
+										Background="{StaticResource CheckBoxBackground}"
+										BorderBrush="{StaticResource CheckBoxBorder}"
+										BorderThickness="0"
+										CornerRadius="2">
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" />
+											<ColumnDefinition Width="*" />
+										</Grid.ColumnDefinitions>
+										<Border Name="checkmarkBorder"
+												Width="16"
+												Height="16"
+												Margin="2"
+												HorizontalAlignment="Center"
+												VerticalAlignment="Center"
+												BorderBrush="{StaticResource CheckBoxBorder}"
+												BorderThickness="1">
+											<Path Name="checkMark"
+												  Width="12"
+												  Height="12"
+												  Margin="1"
+												  Data="M 0 4 L 3.5 8 L 8 0"
+												  Fill="{StaticResource CheckBoxCheckmark}"
+												  Opacity="0"
+												  Stretch="Uniform" />
+										</Border>
+										<ContentPresenter Grid.Column="1"
+														  Margin="5 0 0 0"
+														  VerticalAlignment="Center"
+														  RecognizesAccessKey="True" />
+									</Grid>
+								</Border>
+							</StackPanel>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsChecked" Value="True">
+									<Setter TargetName="checkMark" Property="Opacity" Value="1" />
+								</Trigger>
+								<Trigger Property="IsEnabled" Value="False">
+									<Setter TargetName="border" Property="Background" Value="{StaticResource CheckBoxBackgroundDisabled}" />
+									<Setter TargetName="border" Property="BorderBrush" Value="{StaticResource CheckBoxBorderDisabled}" />
+									<Setter Property="Foreground" Value="{StaticResource CheckBoxForegroundDisabled}" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>
