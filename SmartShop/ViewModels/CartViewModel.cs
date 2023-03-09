@@ -58,11 +58,17 @@ public class CartViewModel : PropertyChangedBase
 
 	private void OnProductPropertyChanged(object sender, PropertyChangedEventArgs e)
 	{
-		// Checks if the changed property is IsInCart, and if so, recalculates the TotalPrice property
 		if (e.PropertyName == nameof(Product.IsInCart))
 		{
-			NotifyPropertyChanged(nameof(TotalPrice));
-			ExportCartCommand.RaiseCanExecuteChanged();
+			var product = (Product)sender;
+			if (product.IsInCart)
+			{
+				_cartService.AddToCart(product);
+			}
+			else
+			{
+				_cartService.RemoveFromCart(product);
+			}
 		}
 	}
 
