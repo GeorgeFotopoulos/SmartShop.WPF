@@ -4,7 +4,7 @@ namespace SmartShop.Services;
 
 public interface ICartService
 {
-	Cart ShoppingCart { get; }
+	Cart GetCart();
 	void AddToCart(Product product);
 	void RemoveFromCart(Product product);
 }

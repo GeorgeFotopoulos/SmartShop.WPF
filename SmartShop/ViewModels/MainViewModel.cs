@@ -41,7 +41,7 @@ public class MainViewModel : PropertyChangedBase
 		GoToPreviousPageCommand = new RelayCommand(obj => CurrentPage--, () => CurrentPage > 1);
 		GoToNextPageCommand = new RelayCommand(obj => CurrentPage++, () => CurrentPage < TotalPages && TotalPages > 0);
 		GoToPageCommand = new RelayCommand(page => GoToPage(page), () => true);
-		ViewCartCommand = new RelayCommand(obj => ViewCart(), () => _cartService.ShoppingCart.Items.Count > 0);
+		ViewCartCommand = new RelayCommand(obj => ViewCart(), () => _cartService.GetCart().Items.Count > 0);
 		CartLinkClickCommand = new RelayCommand(product => ChangeProductCartState(product), () => true);
 
 		Products = new ObservableCollection<Product>(_data);

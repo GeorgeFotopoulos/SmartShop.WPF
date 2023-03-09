@@ -27,13 +27,13 @@ public class CartViewModel : PropertyChangedBase
 		_productService = productService;
 		_cartService = cartService;
 
-		_cartService.ShoppingCart.PropertyChanged += CartPropertyChanged;
+		_cartService.GetCart().PropertyChanged += CartPropertyChanged;
 
 		_products = _productService.GetProducts();
 		_correlations = _productService.GetCorrelations();
 
 		var data = new List<Product>();
-		foreach (var item in _cartService.ShoppingCart.Items)
+		foreach (var item in _cartService.GetCart().Items)
 		{
 			data.Add(item);
 			data.Add(_products.FirstOrDefault(x => x.Code == _correlations.Where(x => x.Key == item.Code)
@@ -49,12 +49,12 @@ public class CartViewModel : PropertyChangedBase
 			product.PropertyChanged += OnProductPropertyChanged;
 		}
 
-		ExportCartCommand = new RelayCommand(obj => ExportCart(), () => _cartService.ShoppingCart.Items.Any());
+		ExportCartCommand = new RelayCommand(obj => ExportCart(), () => _cartService.GetCart().Items.Any());
 	}
 
 	public ObservableCollection<Product> SklavenitisProducts { get => _sklavenitisProducts; set => SetField(ref _sklavenitisProducts, value); }
 	public ObservableCollection<Product> AbProducts { get => _abProducts; set => SetField(ref _abProducts, value); }
-	public double TotalPrice => _cartService.ShoppingCart.TotalPrice;
+	public double TotalPrice => _cartService.GetCart().TotalPrice;
 
 	public RelayCommand ExportCartCommand { get; }
 
@@ -86,7 +86,7 @@ public class CartViewModel : PropertyChangedBase
 
 	public void ExportCart()
 	{
-		var productsInCart = _cartService.ShoppingCart.Items;
+		var productsInCart = _cartService.GetCart().Items;
 		var fileContent = new StringBuilder();
 
 		foreach (var product in productsInCart)
