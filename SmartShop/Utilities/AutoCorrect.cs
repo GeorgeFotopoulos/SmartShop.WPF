@@ -5,7 +5,7 @@ namespace SmartShop.Utilities;
 
 public static class AutoCorrect
 {
-	private static readonly Dictionary<char, char> _greekDictionary = new()
+	private static readonly Dictionary<char, char> _greekDictionary = new Dictionary<char, char>()
 	{
 		{ 'Ά', 'Α' },
 		{ 'Έ', 'Ε' },

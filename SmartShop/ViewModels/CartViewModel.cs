@@ -19,7 +19,8 @@ public class CartViewModel : PropertyChangedBase
 
 	private readonly List<Product> _products;
 	private readonly List<Correlation> _correlations;
-	private ObservableCollection<Product> _sklavenitisProducts = new(), _abProducts = new();
+	private ObservableCollection<Product> _abProducts = new ObservableCollection<Product>();
+	private ObservableCollection<Product> _sklavenitisProducts = new ObservableCollection<Product>();
 
 	public CartViewModel(IProductService productService, ICartService cartService)
 	{

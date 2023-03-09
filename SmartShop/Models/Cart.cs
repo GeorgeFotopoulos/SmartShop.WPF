@@ -7,7 +7,7 @@ namespace SmartShop.Models;
 
 public class Cart : PropertyChangedBase
 {
-	private ObservableCollection<Product> _items = new();
+	private ObservableCollection<Product> _items = new ObservableCollection<Product>();
 
 	public Cart()
 	{

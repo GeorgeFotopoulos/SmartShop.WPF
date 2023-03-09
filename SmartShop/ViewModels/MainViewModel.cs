@@ -21,9 +21,9 @@ public class MainViewModel : PropertyChangedBase
 	private readonly IComponentContext _componentContext;
 
 	private string _searchText;
-	private ObservableCollection<Page> _pages = new();
 	private int _totalPages, _currentPage, _itemsPerPage;
 	private ObservableCollection<Product> _products, _pagedProducts;
+	private ObservableCollection<Page> _pages = new ObservableCollection<Page>();
 
 	public MainViewModel(IProductService productService, ICartService cartService, IComponentContext componentContext, bool discountMode)
 	{
