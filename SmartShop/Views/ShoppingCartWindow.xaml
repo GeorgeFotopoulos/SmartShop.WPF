@@ -67,12 +67,16 @@
 				</ItemsControl>
 			</StackPanel>
 
-			<TextBlock Grid.Row="1"
-					   Grid.ColumnSpan="2"
-					   Margin="15"
-					   FontSize="18"
-					   FontWeight="DemiBold"
-					   Text="{Binding TotalPrice, StringFormat='Σύνολο: {0:F2} €'}" />
+			<StackPanel Grid.Row="1"
+						Grid.ColumnSpan="2">
+				<TextBlock Margin="15"
+						   FontSize="18"
+						   FontWeight="DemiBold"
+						   Text="{Binding TotalPrice, StringFormat='Σύνολο: {0:F2} €'}" />
+				<Button Margin="15 0 15 15"
+						Command="{Binding ExportCartCommand}"
+						Content="Export Cart" />
+			</StackPanel>
 		</Grid>
 	</ScrollViewer>
 </Window>
