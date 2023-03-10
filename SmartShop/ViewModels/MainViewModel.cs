@@ -133,7 +133,7 @@ public class MainViewModel : PropertyChangedBase
 		var cartWindow = _componentContext.Resolve<CartWindow>();
 		cartWindow.Closed += CartWindowClosed;
 		cartWindow.DataContext = cartViewModel;
-		cartWindow.Show();
+		cartWindow.ShowDialog();
 	}
 
 	private void CartWindowClosed(object sender, EventArgs e)
