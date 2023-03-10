@@ -77,12 +77,13 @@
 				  AutoGenerateColumns="False"
 				  ItemsSource="{Binding PagedProducts}"
 				  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+				  SelectedItem="{Binding SelectedProduct}"
 				  SelectionMode="Single">
 			<DataGrid.Columns>
 				<DataGridTextColumn Width="150"
 									Binding="{Binding Store}"
 									Header="Κατάστημα" />
-				<DataGridTemplateColumn Width="750"
+				<DataGridTemplateColumn Width="650"
 										Header="Προϊόν"
 										HeaderStyle="{StaticResource {x:Type DataGridColumnHeader}}"
 										SortMemberPath="ProductName">
@@ -125,10 +126,22 @@
 				<DataGridTextColumn Width="100"
 									Binding="{Binding PricePerUnitWithMetricUnit}"
 									Header="Τιμή ανά μονάδα" />
+				<DataGridTemplateColumn Header="Ιστορικότητα">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<TextBlock>
+								<Hyperlink Command="{Binding DataContext.ViewHistoryCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+										   CommandParameter="{Binding}">
+									<TextBlock Text="Προβολή" />
+								</Hyperlink>
+							</TextBlock>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
 				<DataGridTemplateColumn Width="95"
 										Header="Καλάθι αγορών"
-										SortMemberPath="IsInCart"
-										HeaderStyle="{StaticResource {x:Type DataGridColumnHeader}}">
+										HeaderStyle="{StaticResource {x:Type DataGridColumnHeader}}"
+										SortMemberPath="IsInCart">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<TextBlock>

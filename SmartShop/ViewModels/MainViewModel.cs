@@ -22,6 +22,7 @@ public class MainViewModel : PropertyChangedBase
 	private readonly List<ProductHistory> _productHistories;
 
 	private string _searchText;
+	private Product _selectedProduct;
 	private int _totalPages, _currentPage, _itemsPerPage, _cartItems;
 	private ObservableCollection<Product> _allProducts, _pagedProducts;
 	private ObservableCollection<Page> _pages = new ObservableCollection<Page>();
@@ -45,14 +46,17 @@ public class MainViewModel : PropertyChangedBase
 		GoToPageCommand = new RelayCommand(page => GoToPage(page), () => true);
 		ViewCartCommand = new RelayCommand(obj => ViewCart(), () => _cartService.GetCart().Items.Count > 0);
 		CartLinkClickCommand = new RelayCommand(product => ChangeProductCartState(product), () => true);
+		ViewHistoryCommand = new RelayCommand(product => ViewHistory(product), () => _productHistories.Count(p => p.Code == SelectedProduct?.Code) > 1);
 
 		AllProducts = new ObservableCollection<Product>(_products);
 	}
 
+	public int CartItems { get => _cartItems; set => SetField(ref _cartItems, value); }
 	public int TotalPages { get => _totalPages; private set => SetField(ref _totalPages, value); }
 	public ObservableCollection<Page> Pages { get => _pages; set => SetField(ref _pages, value); }
 	public ObservableCollection<Product> PagedProducts { get => _pagedProducts; private set => SetField(ref _pagedProducts, value); }
-
+	public Product SelectedProduct { get => _selectedProduct; set => SetField(ref _selectedProduct, value); }
+	
 	public ObservableCollection<Product> AllProducts
 	{
 		get => _allProducts;
@@ -99,14 +103,18 @@ public class MainViewModel : PropertyChangedBase
 		}
 	}
 
-	public int CartItems { get => _cartItems; set => SetField(ref _cartItems, value); }
-
 	public RelayCommand ClearCommand { get; }
 	public RelayCommand GoToPreviousPageCommand { get; }
 	public RelayCommand GoToNextPageCommand { get; }
+	public RelayCommand GoToPageCommand { get; }
 	public RelayCommand ViewCartCommand { get; }
 	public RelayCommand CartLinkClickCommand { get; }
-	public RelayCommand GoToPageCommand { get; }
+	public RelayCommand ViewHistoryCommand { get; }
+
+	private void ViewHistory(object product)
+	{
+		throw new NotImplementedException(); // TODO
+	}
 
 	private void ChangeProductCartState(object parameter)
 	{
