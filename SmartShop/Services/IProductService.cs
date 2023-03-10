@@ -6,4 +6,5 @@ public interface IProductService
 {
 	List<Product> GetProducts();
 	List<Correlation> GetCorrelations();
+	List<ProductHistory> GetProductHistories();
 }

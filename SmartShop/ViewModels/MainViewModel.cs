@@ -14,14 +14,16 @@ namespace SmartShop.ViewModels;
 
 public class MainViewModel : PropertyChangedBase
 {
-	private readonly List<Product> _data;
 	private readonly ICartService _cartService;
 	private readonly IProductService _productService;
 	private readonly IComponentContext _componentContext;
 
+	private readonly List<Product> _products;
+	private readonly List<ProductHistory> _productHistories;
+
 	private string _searchText;
-	private ObservableCollection<Product> _products, _pagedProducts;
 	private int _totalPages, _currentPage, _itemsPerPage, _cartItems;
+	private ObservableCollection<Product> _allProducts, _pagedProducts;
 	private ObservableCollection<Page> _pages = new ObservableCollection<Page>();
 
 	public MainViewModel(IProductService productService, ICartService cartService, IComponentContext componentContext, bool discountMode)
@@ -30,9 +32,10 @@ public class MainViewModel : PropertyChangedBase
 		_cartService = cartService;
 		_componentContext = componentContext;
 
-		_data = discountMode
+		_products = discountMode
 			? _productService.GetProducts().Where(x => x.Discounted).OrderByDescending(x => x.DiscountPercentage).ToList()
 			: _productService.GetProducts().OrderByDescending(x => x.DiscountPercentage).ThenBy(x => x.PricePerUnit).ToList();
+		_productHistories = _productService.GetProductHistories();
 
 		SetItemsPerPage();
 
@@ -43,22 +46,22 @@ public class MainViewModel : PropertyChangedBase
 		ViewCartCommand = new RelayCommand(obj => ViewCart(), () => _cartService.GetCart().Items.Count > 0);
 		CartLinkClickCommand = new RelayCommand(product => ChangeProductCartState(product), () => true);
 
-		Products = new ObservableCollection<Product>(_data);
+		AllProducts = new ObservableCollection<Product>(_products);
 	}
 
 	public int TotalPages { get => _totalPages; private set => SetField(ref _totalPages, value); }
 	public ObservableCollection<Page> Pages { get => _pages; set => SetField(ref _pages, value); }
 	public ObservableCollection<Product> PagedProducts { get => _pagedProducts; private set => SetField(ref _pagedProducts, value); }
 
-	public ObservableCollection<Product> Products
+	public ObservableCollection<Product> AllProducts
 	{
-		get => _products;
+		get => _allProducts;
 
 		set
 		{
-			if (SetField(ref _products, value))
+			if (SetField(ref _allProducts, value))
 			{
-				TotalPages = (int)Math.Ceiling((double)_products.Count / _itemsPerPage);
+				TotalPages = (int)Math.Ceiling((double)_allProducts.Count / _itemsPerPage);
 				CurrentPage = 1;
 			}
 		}
@@ -74,7 +77,7 @@ public class MainViewModel : PropertyChangedBase
 			{
 				CurrentPage = 0;
 				var searchTerms = AutoCorrect.Normalize(_searchText).ToUpper().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-				Products = new ObservableCollection<Product>(_data.Where(p => searchTerms.All(s => AutoCorrect.Normalize(p.ProductName).ToUpper().Contains(s.Trim()))));
+				AllProducts = new ObservableCollection<Product>(_products.Where(p => searchTerms.All(s => AutoCorrect.Normalize(p.ProductName).ToUpper().Contains(s.Trim()))));
 			}
 		}
 	}
@@ -127,7 +130,7 @@ public class MainViewModel : PropertyChangedBase
 	private void ViewCart()
 	{
 		// Resolves the CartViewModel instance from the container
-		var cartViewModel = _componentContext.Resolve<CartViewModel>(new NamedParameter("products", _data));
+		var cartViewModel = _componentContext.Resolve<CartViewModel>(new NamedParameter("products", _products));
 
 		// Resolves the CartWindow instance from the container
 		var cartWindow = _componentContext.Resolve<CartWindow>();
@@ -149,13 +152,13 @@ public class MainViewModel : PropertyChangedBase
 	private void ClearSearch()
 	{
 		SearchText = string.Empty;
-		Products = new ObservableCollection<Product>(_data);
+		AllProducts = new ObservableCollection<Product>(_products);
 	}
 
 	private void UpdatePagedItems()
 	{
 		var startIndex = (CurrentPage - 1) * _itemsPerPage;
-		PagedProducts = new ObservableCollection<Product>(Products.Skip(startIndex).Take(_itemsPerPage));
+		PagedProducts = new ObservableCollection<Product>(AllProducts.Skip(startIndex).Take(_itemsPerPage));
 	}
 
 	public void GoToPage(object parameter)
