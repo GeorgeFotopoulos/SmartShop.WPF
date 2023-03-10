@@ -98,7 +98,11 @@ public class CartViewModel : PropertyChangedBase
 			fileContent.AppendLine($"Κατάστημα: {product.Store}");
 			fileContent.AppendLine($"Προϊόν: {product.ProductName}");
 			fileContent.AppendLine($"Σύνδεσμος: {product.Link}");
-			fileContent.AppendLine($"Τιμή: {product.FinalPrice:F2} €");
+			if (product.PricePerUnit != null)
+			{
+				fileContent.AppendLine($"Τιμή: {product.FinalPrice:F2} €");
+			}
+
 			fileContent.AppendLine($"Τιμή ανά μονάδα: {product.PricePerUnitWithMetricUnit}");
 			if (product.DiscountPercentage.HasValue)
 			{

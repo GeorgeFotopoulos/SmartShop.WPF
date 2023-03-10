@@ -1,8 +1,8 @@
 ﻿<Application x:Class="SmartShop.App"
-			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-			 Startup="OnStartup">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             Startup="OnStartup">
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -11,23 +11,23 @@
 
 			<!--  Application Primary Color  -->
 			<SolidColorBrush x:Key="AppThemePrimaryColor"
-							 Color="#00214D" />
+			                 Color="#00214D" />
 
 			<!--  Application Secondary Color  -->
 			<SolidColorBrush x:Key="AppThemeSecondaryColor"
-							 Color="#0059b3" />
+			                 Color="#0059b3" />
 
 			<!--  Application Tetriary Color  -->
 			<SolidColorBrush x:Key="AppThemeTetriaryColor"
-							 Color="#D1EAFF" />
+			                 Color="#D1EAFF" />
 
 			<!--  Application Quaternary Color  -->
 			<SolidColorBrush x:Key="AppThemeQuaternaryColor"
-							 Color="GhostWhite" />
+			                 Color="GhostWhite" />
 
 			<!--  Pagination Button Style  -->
 			<Style x:Key="PaginationButtonStyle"
-				   TargetType="Button">
+			       TargetType="Button">
 				<Setter Property="Padding" Value="6 3" />
 				<Setter Property="FocusVisualStyle" Value="{x:Null}" />
 				<Setter Property="Margin" Value="2" />
@@ -46,7 +46,7 @@
 				</Style.Resources>
 				<Style.Triggers>
 					<DataTrigger Binding="{Binding Content, RelativeSource={RelativeSource Self}}"
-								 Value="...">
+					             Value="...">
 						<Setter Property="Background" Value="Transparent" />
 						<Setter Property="IsHitTestVisible" Value="False" />
 						<Setter Property="Foreground" Value="#A5A5A5" />
@@ -60,7 +60,7 @@
 						<Setter Property="Background" Value="#ddd" />
 					</Trigger>
 					<DataTrigger Binding="{Binding IsCurrent}"
-								 Value="True">
+					             Value="True">
 						<Setter Property="Background" Value="DarkSlateGray" />
 						<Setter Property="Foreground" Value="White" />
 					</DataTrigger>
@@ -90,18 +90,18 @@
 					<Setter.Value>
 						<ControlTemplate TargetType="{x:Type Button}">
 							<Border x:Name="border"
-									Padding="{TemplateBinding Padding}"
-									Background="{TemplateBinding Background}"
-									BorderBrush="{TemplateBinding BorderBrush}"
-									BorderThickness="{TemplateBinding BorderThickness}"
-									CornerRadius="10"
-									SnapsToDevicePixels="True">
+							        Padding="{TemplateBinding Padding}"
+							        Background="{TemplateBinding Background}"
+							        BorderBrush="{TemplateBinding BorderBrush}"
+							        BorderThickness="{TemplateBinding BorderThickness}"
+							        CornerRadius="10"
+							        SnapsToDevicePixels="True">
 								<ContentPresenter x:Name="contentPresenter"
-												  HorizontalAlignment="Center"
-												  VerticalAlignment="Center"
-												  Content="{TemplateBinding Content}"
-												  ContentTemplate="{TemplateBinding ContentTemplate}"
-												  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+								                  HorizontalAlignment="Center"
+								                  VerticalAlignment="Center"
+								                  Content="{TemplateBinding Content}"
+								                  ContentTemplate="{TemplateBinding ContentTemplate}"
+								                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 							</Border>
 							<ControlTemplate.Triggers>
 								<Trigger Property="IsEnabled" Value="False">
@@ -147,25 +147,25 @@
 							<Setter.Value>
 								<ControlTemplate TargetType="{x:Type ScrollBar}">
 									<Grid x:Name="Bg"
-										  Background="#7FBFBFBF"
-										  SnapsToDevicePixels="True">
+									      Background="#7FBFBFBF"
+									      SnapsToDevicePixels="True">
 										<Grid.RowDefinitions>
 											<RowDefinition Height="0.00001*" />
 										</Grid.RowDefinitions>
 										<Track Name="PART_Track"
-											   Width="{TemplateBinding Width}"
-											   HorizontalAlignment="Center"
-											   IsDirectionReversed="True"
-											   Maximum="{TemplateBinding Maximum}"
-											   Minimum="{TemplateBinding Minimum}"
-											   Value="{TemplateBinding Value}">
+										       Width="{TemplateBinding Width}"
+										       HorizontalAlignment="Center"
+										       IsDirectionReversed="True"
+										       Maximum="{TemplateBinding Maximum}"
+										       Minimum="{TemplateBinding Minimum}"
+										       Value="{TemplateBinding Value}">
 											<Track.DecreaseRepeatButton>
 												<RepeatButton Command="ScrollBar.LineUpCommand"
-															  Template="{DynamicResource ScrollBackground}" />
+												              Template="{DynamicResource ScrollBackground}" />
 											</Track.DecreaseRepeatButton>
 											<Track.IncreaseRepeatButton>
 												<RepeatButton Command="ScrollBar.LineDownCommand"
-															  Template="{DynamicResource ScrollBackground}" />
+												              Template="{DynamicResource ScrollBackground}" />
 											</Track.IncreaseRepeatButton>
 											<Track.Thumb>
 												<Thumb Style="{DynamicResource ScrollThumbStyle}" />
@@ -186,25 +186,25 @@
 									<Setter.Value>
 										<ControlTemplate TargetType="{x:Type ScrollBar}">
 											<Grid x:Name="Bg"
-												  Background="#7FA7A7A7"
-												  SnapsToDevicePixels="True">
+											      Background="#7FA7A7A7"
+											      SnapsToDevicePixels="True">
 												<Grid.ColumnDefinitions>
 													<ColumnDefinition Width="0.00001*" />
 												</Grid.ColumnDefinitions>
 												<Track x:Name="PART_Track"
-													   Grid.Column="1"
-													   IsEnabled="{TemplateBinding IsMouseOver}">
+												       Grid.Column="1"
+												       IsEnabled="{TemplateBinding IsMouseOver}">
 													<Track.DecreaseRepeatButton>
 														<RepeatButton Command="ScrollBar.LineUpCommand"
-																	  Template="{DynamicResource ScrollBackground}" />
+														              Template="{DynamicResource ScrollBackground}" />
 													</Track.DecreaseRepeatButton>
 													<Track.IncreaseRepeatButton>
 														<RepeatButton Command="ScrollBar.LineDownCommand"
-																	  Template="{DynamicResource ScrollBackground}" />
+														              Template="{DynamicResource ScrollBackground}" />
 													</Track.IncreaseRepeatButton>
 													<Track.Thumb>
 														<Thumb Height="15"
-															   Style="{DynamicResource ScrollThumbStylecrosswise}" />
+														       Style="{DynamicResource ScrollThumbStylecrosswise}" />
 													</Track.Thumb>
 												</Track>
 											</Grid>
@@ -229,7 +229,7 @@
 					<Setter Property="VerticalGridLinesBrush" Value="{StaticResource AppThemePrimaryColor}" />
 					<Setter Property="HorizontalGridLinesBrush" Value="{StaticResource AppThemePrimaryColor}" />
 					<EventSetter Event="SelectionChanged"
-								 Handler="DataGrid_SelectionChanged" />
+					             Handler="DataGrid_SelectionChanged" />
 				</Style.Setters>
 
 				<Style.Resources>
@@ -245,25 +245,25 @@
 							<Setter.Value>
 								<ControlTemplate TargetType="{x:Type ScrollBar}">
 									<Grid x:Name="Bg"
-										  Background="#7FBFBFBF"
-										  SnapsToDevicePixels="True">
+									      Background="#7FBFBFBF"
+									      SnapsToDevicePixels="True">
 										<Grid.RowDefinitions>
 											<RowDefinition Height="0.00001*" />
 										</Grid.RowDefinitions>
 										<Track Name="PART_Track"
-											   Width="{TemplateBinding Width}"
-											   HorizontalAlignment="Center"
-											   IsDirectionReversed="True"
-											   Maximum="{TemplateBinding Maximum}"
-											   Minimum="{TemplateBinding Minimum}"
-											   Value="{TemplateBinding Value}">
+										       Width="{TemplateBinding Width}"
+										       HorizontalAlignment="Center"
+										       IsDirectionReversed="True"
+										       Maximum="{TemplateBinding Maximum}"
+										       Minimum="{TemplateBinding Minimum}"
+										       Value="{TemplateBinding Value}">
 											<Track.DecreaseRepeatButton>
 												<RepeatButton Command="ScrollBar.LineUpCommand"
-															  Template="{DynamicResource ScrollBackground}" />
+												              Template="{DynamicResource ScrollBackground}" />
 											</Track.DecreaseRepeatButton>
 											<Track.IncreaseRepeatButton>
 												<RepeatButton Command="ScrollBar.LineDownCommand"
-															  Template="{DynamicResource ScrollBackground}" />
+												              Template="{DynamicResource ScrollBackground}" />
 											</Track.IncreaseRepeatButton>
 											<Track.Thumb>
 												<Thumb Style="{DynamicResource ScrollThumbStyle}" />
@@ -284,25 +284,25 @@
 									<Setter.Value>
 										<ControlTemplate TargetType="{x:Type ScrollBar}">
 											<Grid x:Name="Bg"
-												  Background="#7FA7A7A7"
-												  SnapsToDevicePixels="True">
+											      Background="#7FA7A7A7"
+											      SnapsToDevicePixels="True">
 												<Grid.ColumnDefinitions>
 													<ColumnDefinition Width="0.00001*" />
 												</Grid.ColumnDefinitions>
 												<Track x:Name="PART_Track"
-													   Grid.Column="1"
-													   IsEnabled="{TemplateBinding IsMouseOver}">
+												       Grid.Column="1"
+												       IsEnabled="{TemplateBinding IsMouseOver}">
 													<Track.DecreaseRepeatButton>
 														<RepeatButton Command="ScrollBar.LineUpCommand"
-																	  Template="{DynamicResource ScrollBackground}" />
+														              Template="{DynamicResource ScrollBackground}" />
 													</Track.DecreaseRepeatButton>
 													<Track.IncreaseRepeatButton>
 														<RepeatButton Command="ScrollBar.LineDownCommand"
-																	  Template="{DynamicResource ScrollBackground}" />
+														              Template="{DynamicResource ScrollBackground}" />
 													</Track.IncreaseRepeatButton>
 													<Track.Thumb>
 														<Thumb Height="15"
-															   Style="{DynamicResource ScrollThumbStylecrosswise}" />
+														       Style="{DynamicResource ScrollThumbStylecrosswise}" />
 													</Track.Thumb>
 												</Track>
 											</Grid>
@@ -329,7 +329,7 @@
 					<Setter.Value>
 						<DataTemplate>
 							<TextBlock Text="{Binding}"
-									   TextWrapping="Wrap" />
+							           TextWrapping="Wrap" />
 						</DataTemplate>
 					</Setter.Value>
 				</Setter>
@@ -338,23 +338,23 @@
 						<ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
 							<Grid>
 								<Rectangle x:Name="BackgroundRectangle"
-										   Fill="{TemplateBinding Background}"
-										   RadiusX="5"
-										   RadiusY="5" />
+								           Fill="{TemplateBinding Background}"
+								           RadiusX="5"
+								           RadiusY="5" />
 								<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-												  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-												  RecognizesAccessKey="True"
-												  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+								                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+								                  RecognizesAccessKey="True"
+								                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 								<Path x:Name="SortArrow"
-									  Width="8"
-									  Height="6"
-									  Margin="5"
-									  HorizontalAlignment="Right"
-									  VerticalAlignment="Center"
-									  Data="M0,0 L1,0 0.5,1 z"
-									  Fill="White"
-									  Stretch="Fill"
-									  Visibility="Collapsed">
+								      Width="8"
+								      Height="6"
+								      Margin="5"
+								      HorizontalAlignment="Right"
+								      VerticalAlignment="Center"
+								      Data="M0,0 L1,0 0.5,1 z"
+								      Fill="White"
+								      Stretch="Fill"
+								      Visibility="Collapsed">
 									<Path.RenderTransform>
 										<RotateTransform Angle="90" />
 									</Path.RenderTransform>
@@ -365,17 +365,17 @@
 										<VisualState x:Name="MouseOver">
 											<Storyboard>
 												<ColorAnimation Storyboard.TargetName="BackgroundRectangle"
-																Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
-																To="LightGray"
-																Duration="0:0:0.2" />
+												                Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+												                To="LightGray"
+												                Duration="0:0:0.2" />
 											</Storyboard>
 										</VisualState>
 										<VisualState x:Name="Pressed">
 											<Storyboard>
 												<ColorAnimation Storyboard.TargetName="BackgroundRectangle"
-																Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
-																To="Gray"
-																Duration="0:0:0.2" />
+												                Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)"
+												                To="Gray"
+												                Duration="0:0:0.2" />
 											</Storyboard>
 										</VisualState>
 										<VisualState x:Name="Disabled" />
@@ -417,14 +417,14 @@
 					<Setter Property="TextBlock.TextAlignment" Value="Center" />
 					<Setter Property="FocusVisualStyle" Value="{x:Null}" />
 					<EventSetter Event="MouseEnter"
-								 Handler="DataGridCell_MouseEnterEvent" />
+					             Handler="DataGridCell_MouseEnterEvent" />
 					<Setter Property="Template">
 						<Setter.Value>
 							<ControlTemplate TargetType="{x:Type DataGridCell}">
 								<Grid Background="{TemplateBinding Background}">
 									<ContentPresenter MinWidth="90"
-													  MaxHeight="40"
-													  VerticalAlignment="Center" />
+									                  MaxHeight="40"
+									                  VerticalAlignment="Center" />
 								</Grid>
 							</ControlTemplate>
 						</Setter.Value>
@@ -441,13 +441,13 @@
 
 			<!--  ScrollBar Background Style  -->
 			<ControlTemplate x:Key="ScrollBackground"
-							 TargetType="RepeatButton">
+			                 TargetType="RepeatButton">
 				<Border Background="{StaticResource AppThemeQuaternaryColor}" />
 			</ControlTemplate>
 
 			<!--  Vertical ScrollBar Thumb Style  -->
 			<Style x:Key="ScrollThumbStyle"
-				   TargetType="Thumb">
+			       TargetType="Thumb">
 				<Setter Property="SnapsToDevicePixels" Value="True" />
 				<Setter Property="OverridesDefaultStyle" Value="True" />
 				<Setter Property="IsTabStop" Value="False" />
@@ -456,7 +456,7 @@
 					<Setter.Value>
 						<ControlTemplate TargetType="Thumb">
 							<Rectangle Width="15"
-									   Fill="DarkSlateGray" />
+							           Fill="DarkSlateGray" />
 						</ControlTemplate>
 					</Setter.Value>
 				</Setter>
@@ -464,7 +464,7 @@
 
 			<!--  Horizontal ScrollBar Thumb Style  -->
 			<Style x:Key="ScrollThumbStylecrosswise"
-				   TargetType="Thumb">
+			       TargetType="Thumb">
 				<Setter Property="SnapsToDevicePixels" Value="True" />
 				<Setter Property="OverridesDefaultStyle" Value="True" />
 				<Setter Property="IsTabStop" Value="False" />
@@ -498,44 +498,44 @@
 			</Style>
 
 			<SolidColorBrush x:Key="ResponseButtonHoverBrush"
-							 Color="#FFB6DDF3" />
+			                 Color="#FFB6DDF3" />
 			<SolidColorBrush x:Key="ResponseButtonPressedBrush"
-							 Color="#D1EAFF" />
+			                 Color="#D1EAFF" />
 			<SolidColorBrush x:Key="CloseButtonHoverBrush"
-							 Color="#A93226" />
+			                 Color="#A93226" />
 			<SolidColorBrush x:Key="CloseButtonPressedBrush"
-							 Color="#E74C3C" />
+			                 Color="#E74C3C" />
 
 			<!--  MessageBox Close Button Style  -->
 			<Style x:Key="CloseButtonStyle"
-				   TargetType="Button">
+			       TargetType="Button">
 				<Setter Property="FocusVisualStyle" Value="{x:Null}" />
 				<Setter Property="Template">
 					<Setter.Value>
 						<ControlTemplate TargetType="Button">
 							<Grid>
 								<Border x:Name="Background"
-										Background="#E74C3C"
-										CornerRadius="1">
+								        Background="#E74C3C"
+								        CornerRadius="1">
 									<Border BorderBrush="#59FFFFFF"
-											BorderThickness="1"
-											CornerRadius="1" />
+									        BorderThickness="1"
+									        CornerRadius="1" />
 								</Border>
 
 								<ContentPresenter x:Name="contentPresenter"
-												  Margin="{TemplateBinding Padding}"
-												  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-												  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-												  Content="{TemplateBinding Content}"
-												  ContentTemplate="{TemplateBinding ContentTemplate}" />
+								                  Margin="{TemplateBinding Padding}"
+								                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+								                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+								                  Content="{TemplateBinding Content}"
+								                  ContentTemplate="{TemplateBinding ContentTemplate}" />
 
 								<Path x:Name="path"
-									  Margin="1"
-									  Data="M 2,6 C2,6 3,6 3,6 3,6 3,5 3,5 3,5 4,5 4,5 4,5 4,6 4,6 4,6 5,6 5,6 5,6 7,6 7,6 7,6 7,5 7,5 7,5 6,5 6,5 6,5 6,4 6,4 6,4 5,4 5,4 5,4 5,2 5,2 5,2 6,2 6,2 6,2 6,1 6,1 6,1 7,1 7,1 7,1 7,0 7,0 7,0 5,0 5,0 5,0 4,0 4,0 4,0 4,1 4,1 4,1 3,1 3,1 3,1 3,0 3,0 3,0 2,0 2,0 2,0 0,0 0,0 0,0 0,1 0,1 0,1 1,1 1,1 1,1 1,2 1,2 1,2 2,2 2,2 2,2 2,4 2,4 2,4 1,4 1,4 1,4 1,5 1,5 1,5 0,5 0,5 0,5 0,6 0,6 0,6 2,6 2,6 z"
-									  Fill="White"
-									  Opacity="1"
-									  Stretch="Fill"
-									  Visibility="Collapsed" />
+								      Margin="1"
+								      Data="M 2,6 C2,6 3,6 3,6 3,6 3,5 3,5 3,5 4,5 4,5 4,5 4,6 4,6 4,6 5,6 5,6 5,6 7,6 7,6 7,6 7,5 7,5 7,5 6,5 6,5 6,5 6,4 6,4 6,4 5,4 5,4 5,4 5,2 5,2 5,2 6,2 6,2 6,2 6,1 6,1 6,1 7,1 7,1 7,1 7,0 7,0 7,0 5,0 5,0 5,0 4,0 4,0 4,0 4,1 4,1 4,1 3,1 3,1 3,1 3,0 3,0 3,0 2,0 2,0 2,0 0,0 0,0 0,0 0,1 0,1 0,1 1,1 1,1 1,1 1,2 1,2 1,2 2,2 2,2 2,2 2,4 2,4 2,4 1,4 1,4 1,4 1,5 1,5 1,5 0,5 0,5 0,5 0,6 0,6 0,6 2,6 2,6 z"
+								      Fill="White"
+								      Opacity="1"
+								      Stretch="Fill"
+								      Visibility="Collapsed" />
 								<VisualStateManager.VisualStateGroups>
 									<VisualStateGroup x:Name="CommonStates">
 										<VisualState x:Name="Normal" />
@@ -543,11 +543,11 @@
 										<VisualState x:Name="MouseOver">
 											<Storyboard>
 												<ObjectAnimationUsingKeyFrames BeginTime="00:00:00"
-																			   Storyboard.TargetName="Background"
-																			   Storyboard.TargetProperty="(Border.Background)"
-																			   Duration="00:00:00.0010000">
+												                               Storyboard.TargetName="Background"
+												                               Storyboard.TargetProperty="(Border.Background)"
+												                               Duration="00:00:00.0010000">
 													<DiscreteObjectKeyFrame KeyTime="00:00:00"
-																			Value="{StaticResource CloseButtonHoverBrush}" />
+													                        Value="{StaticResource CloseButtonHoverBrush}" />
 												</ObjectAnimationUsingKeyFrames>
 											</Storyboard>
 										</VisualState>
@@ -555,11 +555,11 @@
 										<VisualState x:Name="Pressed">
 											<Storyboard>
 												<ObjectAnimationUsingKeyFrames BeginTime="00:00:00"
-																			   Storyboard.TargetName="Background"
-																			   Storyboard.TargetProperty="(Border.Background)"
-																			   Duration="00:00:00.0010000">
+												                               Storyboard.TargetName="Background"
+												                               Storyboard.TargetProperty="(Border.Background)"
+												                               Duration="00:00:00.0010000">
 													<DiscreteObjectKeyFrame KeyTime="00:00:00"
-																			Value="{StaticResource CloseButtonPressedBrush}" />
+													                        Value="{StaticResource CloseButtonPressedBrush}" />
 												</ObjectAnimationUsingKeyFrames>
 											</Storyboard>
 										</VisualState>
@@ -573,28 +573,28 @@
 
 			<!--  MessageBox Response Button Style  -->
 			<Style x:Key="ResponseButtonStyle"
-				   TargetType="Button">
+			       TargetType="Button">
 				<Setter Property="FocusVisualStyle" Value="{x:Null}" />
 				<Setter Property="Template">
 					<Setter.Value>
 						<ControlTemplate TargetType="Button">
 							<Grid>
 								<Border x:Name="Background"
-										Width="70"
-										Height="25"
-										Background="{DynamicResource AppThemeTetriaryColor}"
-										CornerRadius="2">
+								        Width="70"
+								        Height="25"
+								        Background="{DynamicResource AppThemeTetriaryColor}"
+								        CornerRadius="2">
 									<Border BorderBrush="Black"
-											BorderThickness="1"
-											CornerRadius="3" />
+									        BorderThickness="1"
+									        CornerRadius="3" />
 								</Border>
 
 								<ContentPresenter x:Name="contentPresenter"
-												  Margin="{TemplateBinding Padding}"
-												  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-												  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-												  Content="{TemplateBinding Content}"
-												  ContentTemplate="{TemplateBinding ContentTemplate}" />
+								                  Margin="{TemplateBinding Padding}"
+								                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+								                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+								                  Content="{TemplateBinding Content}"
+								                  ContentTemplate="{TemplateBinding ContentTemplate}" />
 								<VisualStateManager.VisualStateGroups>
 									<VisualStateGroup x:Name="CommonStates">
 										<VisualState x:Name="Normal" />
@@ -602,11 +602,11 @@
 										<VisualState x:Name="MouseOver">
 											<Storyboard>
 												<ObjectAnimationUsingKeyFrames BeginTime="00:00:00"
-																			   Storyboard.TargetName="Background"
-																			   Storyboard.TargetProperty="(Border.Background)"
-																			   Duration="00:00:00.0010000">
+												                               Storyboard.TargetName="Background"
+												                               Storyboard.TargetProperty="(Border.Background)"
+												                               Duration="00:00:00.0010000">
 													<DiscreteObjectKeyFrame KeyTime="00:00:00"
-																			Value="{StaticResource ResponseButtonHoverBrush}" />
+													                        Value="{StaticResource ResponseButtonHoverBrush}" />
 												</ObjectAnimationUsingKeyFrames>
 											</Storyboard>
 										</VisualState>
@@ -614,11 +614,11 @@
 										<VisualState x:Name="Pressed">
 											<Storyboard>
 												<ObjectAnimationUsingKeyFrames BeginTime="00:00:00"
-																			   Storyboard.TargetName="Background"
-																			   Storyboard.TargetProperty="(Border.Background)"
-																			   Duration="00:00:00.0010000">
+												                               Storyboard.TargetName="Background"
+												                               Storyboard.TargetProperty="(Border.Background)"
+												                               Duration="00:00:00.0010000">
 													<DiscreteObjectKeyFrame KeyTime="00:00:00"
-																			Value="{StaticResource ResponseButtonPressedBrush}" />
+													                        Value="{StaticResource ResponseButtonPressedBrush}" />
 												</ObjectAnimationUsingKeyFrames>
 											</Storyboard>
 										</VisualState>
@@ -649,14 +649,14 @@
 			</LinearGradientBrush>
 
 			<SolidColorBrush x:Key="TextBox_DisabledBorder"
-							 Color="#ADB2B5" />
+			                 Color="#ADB2B5" />
 			<SolidColorBrush x:Key="TextBox_DisabledBackground"
-							 Color="#F4F4F4" />
+			                 Color="#F4F4F4" />
 
 			<DataTemplate x:Key="DefaultWatermarkTemplate">
 				<ContentControl Content="{Binding}"
-								Focusable="False"
-								Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+				                Focusable="False"
+				                Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
 			</DataTemplate>
 
 			<Style TargetType="{x:Type xctk:WatermarkTextBox}">
@@ -676,30 +676,30 @@
 							<Grid>
 
 								<Border x:Name="Border"
-										Background="{TemplateBinding Background}"
-										BorderBrush="{TemplateBinding BorderBrush}"
-										BorderThickness="{TemplateBinding BorderThickness}"
-										CornerRadius="5" />
+								        Background="{TemplateBinding Background}"
+								        BorderBrush="{TemplateBinding BorderBrush}"
+								        BorderThickness="{TemplateBinding BorderThickness}"
+								        CornerRadius="5" />
 								<Border x:Name="MouseOverVisual"
-										BorderBrush="{StaticResource TextBox_MouseOver}"
-										BorderThickness="{TemplateBinding BorderThickness}"
-										CornerRadius="5"
-										Opacity="0" />
+								        BorderBrush="{StaticResource TextBox_MouseOver}"
+								        BorderThickness="{TemplateBinding BorderThickness}"
+								        CornerRadius="5"
+								        Opacity="0" />
 								<Border x:Name="FocusVisual"
-										BorderBrush="{StaticResource TextBox_Focused}"
-										BorderThickness="{TemplateBinding BorderThickness}"
-										CornerRadius="5"
-										Opacity="0" />
+								        BorderBrush="{StaticResource TextBox_Focused}"
+								        BorderThickness="{TemplateBinding BorderThickness}"
+								        CornerRadius="5"
+								        Opacity="0" />
 								<ScrollViewer x:Name="PART_ContentHost"
-											  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+								              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 								<ContentPresenter x:Name="PART_WatermarkHost"
-												  Margin="{TemplateBinding Padding}"
-												  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-												  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-												  Content="{TemplateBinding Watermark}"
-												  ContentTemplate="{TemplateBinding WatermarkTemplate}"
-												  IsHitTestVisible="False"
-												  Visibility="Collapsed" />
+								                  Margin="{TemplateBinding Padding}"
+								                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+								                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+								                  Content="{TemplateBinding Watermark}"
+								                  ContentTemplate="{TemplateBinding WatermarkTemplate}"
+								                  IsHitTestVisible="False"
+								                  Visibility="Collapsed" />
 							</Grid>
 
 							<ControlTemplate.Triggers>
@@ -722,9 +722,9 @@
 										<BeginStoryboard>
 											<Storyboard>
 												<DoubleAnimation Storyboard.TargetName="PART_WatermarkHost"
-																 Storyboard.TargetProperty="Opacity"
-																 To=".33"
-																 Duration="0:0:0.2" />
+												                 Storyboard.TargetProperty="Opacity"
+												                 To=".33"
+												                 Duration="0:0:0.2" />
 											</Storyboard>
 										</BeginStoryboard>
 									</MultiTrigger.EnterActions>
@@ -733,8 +733,8 @@
 										<BeginStoryboard>
 											<Storyboard>
 												<DoubleAnimation Storyboard.TargetName="PART_WatermarkHost"
-																 Storyboard.TargetProperty="Opacity"
-																 Duration="0:0:0.4" />
+												                 Storyboard.TargetProperty="Opacity"
+												                 Duration="0:0:0.4" />
 											</Storyboard>
 										</BeginStoryboard>
 									</MultiTrigger.ExitActions>
@@ -745,8 +745,8 @@
 										<BeginStoryboard>
 											<Storyboard>
 												<DoubleAnimation Storyboard.TargetName="PART_WatermarkHost"
-																 Storyboard.TargetProperty="Opacity"
-																 Duration="0:0:0.4" />
+												                 Storyboard.TargetProperty="Opacity"
+												                 Duration="0:0:0.4" />
 											</Storyboard>
 										</BeginStoryboard>
 									</Trigger.EnterActions>
@@ -755,9 +755,9 @@
 										<BeginStoryboard>
 											<Storyboard>
 												<DoubleAnimation Storyboard.TargetName="PART_WatermarkHost"
-																 Storyboard.TargetProperty="Opacity"
-																 To="0"
-																 Duration="0:0:0.2" />
+												                 Storyboard.TargetProperty="Opacity"
+												                 To="0"
+												                 Duration="0:0:0.2" />
 											</Storyboard>
 										</BeginStoryboard>
 									</Trigger.ExitActions>
@@ -784,20 +784,26 @@
 
 			<!--  Custom Button Template  -->
 			<Style x:Key="CustomButton"
-				   TargetType="{x:Type Button}">
+			       TargetType="Button">
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="Padding" Value="10 0" />
+				<Setter Property="HorizontalAlignment" Value="Left" />
+				<Setter Property="Cursor" Value="Hand" />
+				<Setter Property="Opacity" Value="1" />
 				<Setter Property="Template">
 					<Setter.Value>
-						<ControlTemplate TargetType="{x:Type Button}">
-							<ContentPresenter Margin="{TemplateBinding Padding}"
-											  HorizontalAlignment="Stretch"
-											  VerticalAlignment="Stretch"
-											  Content="{TemplateBinding Content}"
-											  ContentTemplate="{TemplateBinding ContentTemplate}"
-											  Cursor="Hand"
-											  FocusVisualStyle="{x:Null}"
-											  Focusable="False"
-											  RecognizesAccessKey="True"
-											  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+						<ControlTemplate TargetType="Button">
+							<Border Padding="{TemplateBinding Padding}"
+							        Background="{TemplateBinding Background}">
+								<ContentPresenter HorizontalAlignment="Center"
+								                  VerticalAlignment="Center" />
+							</Border>
+							<ControlTemplate.Triggers>
+								<Trigger Property="IsEnabled" Value="False">
+									<Setter Property="Opacity" Value=".5" />
+								</Trigger>
+							</ControlTemplate.Triggers>
 						</ControlTemplate>
 					</Setter.Value>
 				</Setter>
@@ -805,23 +811,23 @@
 
 			<!--  Define colors and brushes  -->
 			<SolidColorBrush x:Key="CheckBoxBackground"
-							 Color="Transparent" />
+			                 Color="Transparent" />
 			<SolidColorBrush x:Key="CheckBoxBorder"
-							 Color="#CCCCCC" />
+			                 Color="#CCCCCC" />
 			<SolidColorBrush x:Key="CheckBoxForeground"
-							 Color="#333333" />
+			                 Color="#333333" />
 			<SolidColorBrush x:Key="CheckBoxCheckmark"
-							 Color="#007ACC" />
+			                 Color="#007ACC" />
 			<SolidColorBrush x:Key="CheckBoxBackgroundMouseOver"
-							 Color="#F5F5F5" />
+			                 Color="#F5F5F5" />
 			<SolidColorBrush x:Key="CheckBoxBorderMouseOver"
-							 Color="#B2B2B2" />
+			                 Color="#B2B2B2" />
 			<SolidColorBrush x:Key="CheckBoxBackgroundDisabled"
-							 Color="#F7F7F7" />
+			                 Color="#F7F7F7" />
 			<SolidColorBrush x:Key="CheckBoxBorderDisabled"
-							 Color="#D9D9D9" />
+			                 Color="#D9D9D9" />
 			<SolidColorBrush x:Key="CheckBoxForegroundDisabled"
-							 Color="#A5A5A5" />
+			                 Color="#A5A5A5" />
 
 			<!--  CheckBox Style  -->
 			<Style TargetType="{x:Type CheckBox}">
@@ -834,36 +840,36 @@
 						<ControlTemplate TargetType="{x:Type CheckBox}">
 							<StackPanel Orientation="Horizontal">
 								<Border Name="border"
-										Background="{StaticResource CheckBoxBackground}"
-										BorderBrush="{StaticResource CheckBoxBorder}"
-										BorderThickness="0"
-										CornerRadius="2">
+								        Background="{StaticResource CheckBoxBackground}"
+								        BorderBrush="{StaticResource CheckBoxBorder}"
+								        BorderThickness="0"
+								        CornerRadius="2">
 									<Grid>
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition Width="Auto" />
 											<ColumnDefinition Width="*" />
 										</Grid.ColumnDefinitions>
 										<Border Name="checkmarkBorder"
-												Width="16"
-												Height="16"
-												Margin="2"
-												HorizontalAlignment="Center"
-												VerticalAlignment="Center"
-												BorderBrush="{StaticResource CheckBoxBorder}"
-												BorderThickness="1">
+										        Width="16"
+										        Height="16"
+										        Margin="2"
+										        HorizontalAlignment="Center"
+										        VerticalAlignment="Center"
+										        BorderBrush="{StaticResource CheckBoxBorder}"
+										        BorderThickness="1">
 											<Path Name="checkMark"
-												  Width="12"
-												  Height="12"
-												  Margin="1"
-												  Data="M 0 4 L 3.5 8 L 8 0"
-												  Fill="{StaticResource CheckBoxCheckmark}"
-												  Opacity="0"
-												  Stretch="Uniform" />
+											      Width="12"
+											      Height="12"
+											      Margin="1"
+											      Data="M 0 4 L 3.5 8 L 8 0"
+											      Fill="{StaticResource CheckBoxCheckmark}"
+											      Opacity="0"
+											      Stretch="Uniform" />
 										</Border>
 										<ContentPresenter Grid.Column="1"
-														  Margin="5 0 0 0"
-														  VerticalAlignment="Center"
-														  RecognizesAccessKey="True" />
+										                  Margin="5 0 0 0"
+										                  VerticalAlignment="Center"
+										                  RecognizesAccessKey="True" />
 									</Grid>
 								</Border>
 							</StackPanel>

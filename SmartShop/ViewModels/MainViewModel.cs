@@ -20,8 +20,8 @@ public class MainViewModel : PropertyChangedBase
 	private readonly IComponentContext _componentContext;
 
 	private string _searchText;
-	private int _totalPages, _currentPage, _itemsPerPage;
 	private ObservableCollection<Product> _products, _pagedProducts;
+	private int _totalPages, _currentPage, _itemsPerPage, _cartItems;
 	private ObservableCollection<Page> _pages = new ObservableCollection<Page>();
 
 	public MainViewModel(IProductService productService, ICartService cartService, IComponentContext componentContext, bool discountMode)
@@ -96,6 +96,8 @@ public class MainViewModel : PropertyChangedBase
 		}
 	}
 
+	public int CartItems {get => _cartItems; set => SetField(ref _cartItems, value); }
+
 	public RelayCommand ClearCommand { get; }
 	public RelayCommand GoToPreviousPageCommand { get; }
 	public RelayCommand GoToNextPageCommand { get; }
@@ -111,11 +113,13 @@ public class MainViewModel : PropertyChangedBase
 			{
 				_cartService.RemoveFromCart(product);
 				ViewCartCommand.RaiseCanExecuteChanged();
+				CartItems = _cartService.GetCart().Items.Count;
 			}
 			else
 			{
 				_cartService.AddToCart(product);
 				ViewCartCommand.RaiseCanExecuteChanged();
+				CartItems = _cartService.GetCart().Items.Count;
 			}
 		}
 	}

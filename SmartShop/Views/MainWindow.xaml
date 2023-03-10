@@ -13,6 +13,7 @@
         WindowState="Maximized"
         mc:Ignorable="d">
 	<Window.Resources>
+		<converters:CountToBooleanConverter x:Key="CountToBooleanConverter" />
 		<converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
 	</Window.Resources>
 
@@ -41,14 +42,25 @@
 			        FontSize="12" />
 		</StackPanel>
 
-		<Button Width="45"
+		<Button Height="45"
 		        Margin="15 5"
 		        HorizontalAlignment="Right"
 		        VerticalAlignment="Center"
 		        Command="{Binding ViewCartCommand}"
 		        FocusVisualStyle="{x:Null}"
 		        Style="{StaticResource CustomButton}">
-			<Image Source="../Resources/shopping_cart.png" />
+			<StackPanel HorizontalAlignment="Left"
+			            Orientation="Horizontal">
+				<Image Source="../Resources/basket.png" />
+				<TextBlock VerticalAlignment="Center"
+				           FontSize="18"
+				           Text="{Binding CartItems}" />
+			</StackPanel>
+			<Button.IsEnabled>
+				<Binding Converter="{StaticResource CountToBooleanConverter}"
+				         FallbackValue="False"
+				         Path="CartItems" />
+			</Button.IsEnabled>
 		</Button>
 
 		<DataGrid Grid.Row="1"

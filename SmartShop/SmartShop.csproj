@@ -8,7 +8,7 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<ApplicationIcon>Resources\SmartShop.ico</ApplicationIcon>
 	</PropertyGroup>
-
+	
 	<ItemGroup>
 		<PackageReference Include="Autofac" Version="7.0.0" />
 		<PackageReference Include="BusyIndicator" Version="2.0.2.1" />
@@ -23,6 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Resource Include="Resources\basket.png" />
 		<Resource Include="Resources\shopping_cart.png" />
 	</ItemGroup>
 </Project>
