@@ -32,7 +32,7 @@ public class MainViewModel : PropertyChangedBase
 
 		_data = discountMode
 			? _productService.GetProducts().Where(x => x.Discounted).OrderByDescending(x => x.DiscountPercentage).ToList()
-			: _productService.GetProducts().OrderBy(x => x.PricePerUnit).ToList();
+			: _productService.GetProducts().OrderByDescending(x => x.DiscountPercentage).ThenBy(x => x.PricePerUnit).ToList();
 
 		SetItemsPerPage();
 
@@ -96,7 +96,7 @@ public class MainViewModel : PropertyChangedBase
 		}
 	}
 
-	public int CartItems {get => _cartItems; set => SetField(ref _cartItems, value); }
+	public int CartItems { get => _cartItems; set => SetField(ref _cartItems, value); }
 
 	public RelayCommand ClearCommand { get; }
 	public RelayCommand GoToPreviousPageCommand { get; }
