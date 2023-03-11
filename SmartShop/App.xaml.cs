@@ -61,9 +61,17 @@ public partial class App : Application
 				(pi, ctx) => ctx.Resolve<List<Product>>()))
 			.InstancePerDependency();
 
+		builder.RegisterType<ProductHistoryViewModel>().AsSelf()
+			.WithParameter(
+			 new ResolvedParameter(
+				(pi, ctx) => pi.Name == "products",
+				(pi, ctx) => ctx.Resolve<List<ProductHistory>>()))
+			.InstancePerDependency();
+
 		// Registers Views
 		builder.RegisterType<MainWindow>().AsSelf();
 		builder.RegisterType<CartWindow>().AsSelf();
+		builder.RegisterType<ProductHistoryWindow>().AsSelf();
 
 		// Builds the container
 		_container = builder.Build();
