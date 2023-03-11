@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33417.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartShop", "SmartShop\SmartShop.csproj", "{FB0B59E4-1326-4882-BC82-E47B0ECC5C7D}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SmartShopSetup", "SmartShopSetup\SmartShopSetup.vdproj", "{3AEBBB18-C6E1-4448-B5A1-58A5F292AE51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{FB0B59E4-1326-4882-BC82-E47B0ECC5C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB0B59E4-1326-4882-BC82-E47B0ECC5C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB0B59E4-1326-4882-BC82-E47B0ECC5C7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AEBBB18-C6E1-4448-B5A1-58A5F292AE51}.Debug|Any CPU.ActiveCfg = Debug
+		{3AEBBB18-C6E1-4448-B5A1-58A5F292AE51}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
