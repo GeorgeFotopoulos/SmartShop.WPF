@@ -22,7 +22,6 @@ public class MainViewModel : PropertyChangedBase
 	private readonly List<ProductHistory> _productHistories;
 
 	private string _searchText;
-	private Product _selectedProduct;
 	private int _totalPages, _currentPage, _itemsPerPage, _cartItems;
 	private ObservableCollection<Product> _allProducts, _pagedProducts;
 	private ObservableCollection<Page> _pages = new ObservableCollection<Page>();
@@ -40,13 +39,13 @@ public class MainViewModel : PropertyChangedBase
 
 		SetItemsPerPage();
 
-		ClearCommand = new RelayCommand(obj => ClearSearch(), () => true);
-		GoToPreviousPageCommand = new RelayCommand(obj => CurrentPage--, () => CurrentPage > 1);
-		GoToNextPageCommand = new RelayCommand(obj => CurrentPage++, () => CurrentPage < TotalPages && TotalPages > 0);
-		GoToPageCommand = new RelayCommand(page => GoToPage(page), () => true);
-		ViewCartCommand = new RelayCommand(obj => ViewCart(), () => _cartService.GetCart().Items.Count > 0);
-		CartLinkClickCommand = new RelayCommand(product => ChangeProductCartState(product), () => true);
-		ViewHistoryCommand = new RelayCommand(product => ViewHistory(product), () => _productHistories.Count(p => p.Code == SelectedProduct?.Code) > 1);
+		ClearCommand = new RelayCommand(_ => ClearSearch());
+		GoToPreviousPageCommand = new RelayCommand(_ => CurrentPage--, (_ => CurrentPage > 1));
+		GoToNextPageCommand = new RelayCommand(_ => CurrentPage++, (_ => CurrentPage < TotalPages && TotalPages > 0));
+		GoToPageCommand = new RelayCommand(obj => GoToPage(obj));
+		ViewCartCommand = new RelayCommand(_ => ViewCart(), (_ => _cartService.GetCart().Items.Count > 0));
+		CartLinkClickCommand = new RelayCommand(obj => ChangeProductCartState(obj));
+		ViewHistoryCommand = new RelayCommand(obj => ViewHistory(obj), (obj) => obj is Product product && _productHistories.Count(p => p.Code == product.Code) > 1);
 
 		AllProducts = new ObservableCollection<Product>(_products);
 	}
@@ -55,8 +54,7 @@ public class MainViewModel : PropertyChangedBase
 	public int TotalPages { get => _totalPages; private set => SetField(ref _totalPages, value); }
 	public ObservableCollection<Page> Pages { get => _pages; set => SetField(ref _pages, value); }
 	public ObservableCollection<Product> PagedProducts { get => _pagedProducts; private set => SetField(ref _pagedProducts, value); }
-	public Product SelectedProduct { get => _selectedProduct; set => SetField(ref _selectedProduct, value); }
-	
+
 	public ObservableCollection<Product> AllProducts
 	{
 		get => _allProducts;
@@ -111,9 +109,20 @@ public class MainViewModel : PropertyChangedBase
 	public RelayCommand CartLinkClickCommand { get; }
 	public RelayCommand ViewHistoryCommand { get; }
 
-	private void ViewHistory(object product)
+	private void ViewHistory(object parameter)
 	{
-		throw new NotImplementedException(); // TODO
+		if (parameter is Product product)
+		{
+			var products = _productHistories.Where(x => x.Code == product.Code).OrderByDescending(x => x.ScanDate).ToList();
+
+			// Resolves the ProductHistoryViewModel instance from the container
+			var productHistoryViewModel = _componentContext.Resolve<ProductHistoryViewModel>(new NamedParameter("products", products));
+
+			// Resolves the ProductHistoryWindow instance from the container
+			var productHistoryWindow = _componentContext.Resolve<ProductHistoryWindow>();
+			productHistoryWindow.DataContext = productHistoryViewModel;
+			productHistoryWindow.ShowDialog();
+		}
 	}
 
 	private void ChangeProductCartState(object parameter)
@@ -150,6 +159,7 @@ public class MainViewModel : PropertyChangedBase
 	private void CartWindowClosed(object sender, EventArgs e)
 	{
 		ViewCartCommand.RaiseCanExecuteChanged();
+		CartItems = _cartService.GetCart().Items.Count;
 	}
 
 	private void SetItemsPerPage()
