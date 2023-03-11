@@ -18,7 +18,7 @@ public class DatabaseService : IDatabaseService
 		var service = new DriveService(new BaseClientService.Initializer
 		{
 			ApiKey = "AIzaSyDPUd_qY9XN6jV1NMlekPdYOkHfcpfFEGs",
-			ApplicationName = "Your application name",
+			ApplicationName = "Smart Shop",
 		});
 
 		var fileList = service.Files.List();
