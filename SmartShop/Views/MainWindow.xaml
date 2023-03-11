@@ -33,7 +33,6 @@
 								   Height="30"
 								   Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 								   Watermark="Αναζήτηση..." />
-
 			<Button Width="45"
 					Height="30"
 					Margin="5 0"
@@ -46,7 +45,7 @@
 				Margin="10"
 				HorizontalAlignment="Right"
 				BorderBrush="SlateGray"
-				BorderThickness="1"
+				BorderThickness=".5"
 				CornerRadius="10">
 			<Button VerticalAlignment="Center"
 					Command="{Binding ViewCartCommand}"
@@ -55,7 +54,7 @@
 				<StackPanel HorizontalAlignment="Left"
 							Orientation="Horizontal">
 					<Image Source="../Resources/basket.png" />
-					<TextBlock Margin="5 0 0 0"
+					<TextBlock Margin="5 0"
 							   VerticalAlignment="Center"
 							   FontSize="24"
 							   Foreground="DarkSlateGray"
