@@ -77,7 +77,6 @@
 				  AutoGenerateColumns="False"
 				  ItemsSource="{Binding PagedProducts}"
 				  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-				  SelectedItem="{Binding SelectedProduct}"
 				  SelectionMode="Single">
 			<DataGrid.Columns>
 				<DataGridTextColumn Width="150"
@@ -131,7 +130,8 @@
 						<DataTemplate>
 							<TextBlock>
 								<Hyperlink Command="{Binding DataContext.ViewHistoryCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-										   CommandParameter="{Binding}">
+										   CommandParameter="{Binding}"
+										   FocusVisualStyle="{x:Null}">
 									<TextBlock Text="Προβολή" />
 								</Hyperlink>
 							</TextBlock>
