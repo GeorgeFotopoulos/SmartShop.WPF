@@ -90,23 +90,26 @@ public class CartViewModel : PropertyChangedBase
 
 	public void ExportCart()
 	{
-		var productsInCart = _cartService.GetCart().Items;
+		var productsInCart = _cartService.GetCart().Items.OrderBy(p => p.Store);
 		var fileContent = new StringBuilder();
 
 		foreach (var product in productsInCart)
 		{
-			fileContent.AppendLine($"Κατάστημα: {product.Store}");
-			fileContent.AppendLine($"Προϊόν: {product.ProductName}");
-			fileContent.AppendLine($"Σύνδεσμος: {product.Link}");
+			fileContent.AppendLine($"{product.Store.ToUpper()} - {product.ProductName}");
+			fileContent.AppendLine($"{product.Link}");
+
 			if (product.PricePerUnit != null)
+			{
+				fileContent.AppendLine($"Τιμή: {product.FinalPrice:F2} € ({product.PricePerUnitWithMetricUnit})");
+			}
+			else
 			{
 				fileContent.AppendLine($"Τιμή: {product.FinalPrice:F2} €");
 			}
 
-			fileContent.AppendLine($"Τιμή ανά μονάδα: {product.PricePerUnitWithMetricUnit}");
 			if (product.DiscountPercentage.HasValue)
 			{
-				fileContent.AppendLine($"Ποσοστό έκπτωσης: {product.DiscountPercentage.Value.ToString("P2")}");
+				fileContent.AppendLine($"Έκπτωση: {product.DiscountPercentage.Value.ToString("P2")}");
 			}
 
 			fileContent.AppendLine();
