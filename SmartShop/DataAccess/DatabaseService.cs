@@ -1,5 +1,9 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using Google.Apis.Drive.v3;
+using Google.Apis.Services;
+using Microsoft.Data.Sqlite;
 using System.Data;
+using System.IO;
+using System.Linq;
 
 namespace SmartShop.DataAccess;
 
@@ -7,10 +11,30 @@ public class DatabaseService : IDatabaseService
 {
 	private readonly SqliteConnection connection;
 
-	public DatabaseService(string databasePath)
+	public DatabaseService(string folderId)
 	{
 		SQLitePCL.Batteries.Init();
-		var connectionString = $"DataSource={databasePath};Mode=ReadWriteCreate;";
+
+		var service = new DriveService(new BaseClientService.Initializer
+		{
+			ApiKey = "AIzaSyDPUd_qY9XN6jV1NMlekPdYOkHfcpfFEGs",
+			ApplicationName = "Your application name",
+		});
+
+		var fileList = service.Files.List();
+		fileList.Q = $"'{folderId}' in parents and name='database.db'";
+		var result = fileList.Execute();
+		var file = result.Files.FirstOrDefault();
+
+		if (file != null)
+		{
+			// Download the file to your application's directory
+			var downloadRequest = service.Files.Get(file.Id);
+			using var fileStream = new FileStream("database.db", FileMode.Create, FileAccess.Write);
+			downloadRequest.Download(fileStream);
+		}
+
+		var connectionString = $"Data Source=database.db;Mode=ReadWriteCreate;";
 		connection = new SqliteConnection(connectionString);
 	}
 

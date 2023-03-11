@@ -5,9 +5,7 @@ using SmartShop.Models;
 using SmartShop.Services;
 using SmartShop.ViewModels;
 using SmartShop.Views;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,7 +23,7 @@ public partial class App : Application
 
 		// Registers Services & Dependencies
 		builder.RegisterType<DatabaseService>().As<IDatabaseService>()
-			.WithParameter("databasePath", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "database.db"));
+			.WithParameter("folderId", "1IKz6JmvDeCa0DK2aDGd5GjK8vhIqsGkJ");
 
 		builder.RegisterType<CartService>().As<ICartService>().SingleInstance();
 		builder.RegisterType<ProductService>().As<IProductService>()
