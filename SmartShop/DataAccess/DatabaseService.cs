@@ -34,7 +34,7 @@ public class DatabaseService : IDatabaseService
 			downloadRequest.Download(fileStream);
 		}
 
-		var connectionString = $"Data Source=database.db;Mode=ReadWriteCreate;";
+		var connectionString = $"Data Source=database.db;Mode=ReadOnly;";
 		connection = new SqliteConnection(connectionString);
 	}
 
