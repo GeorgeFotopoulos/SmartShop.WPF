@@ -53,7 +53,7 @@ public class CartViewModel : PropertyChangedBase
 			product.PropertyChanged += OnProductPropertyChanged;
 		}
 
-		ExportCartCommand = new RelayCommand(obj => ExportCart(), () => _cartService.GetCart().Items.Any());
+		ExportCartCommand = new RelayCommand(_ => ExportCart(), (_ => _cartService.GetCart().Items.Any()));
 	}
 
 	public ObservableCollection<Product> SklavenitisProducts { get => _sklavenitisProducts; set => SetField(ref _sklavenitisProducts, value); }
