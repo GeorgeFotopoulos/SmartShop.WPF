@@ -24,6 +24,5 @@
 
 	<ItemGroup>
 		<Resource Include="Resources\basket.png" />
-		<Resource Include="Resources\shopping_cart.png" />
 	</ItemGroup>
 </Project>
