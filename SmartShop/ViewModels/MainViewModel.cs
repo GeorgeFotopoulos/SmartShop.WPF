@@ -37,6 +37,11 @@ public class MainViewModel : PropertyChangedBase
 			: _productService.GetProducts().OrderByDescending(x => x.DiscountPercentage).ThenBy(x => x.PricePerUnit).ToList();
 		_productHistories = _productService.GetProductHistories();
 
+		var productsWithDuplicateCodes = _productHistories.GroupBy(p => p.Code)
+													.Where(g => g.Count() > 1)
+													.SelectMany(g => g)
+													.ToList();
+
 		SetItemsPerPage();
 
 		ClearCommand = new RelayCommand(_ => ClearSearch());
