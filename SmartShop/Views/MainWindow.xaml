@@ -1,224 +1,228 @@
 ﻿<Window x:Class="SmartShop.Views.MainWindow"
-		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:converters="clr-namespace:SmartShop.Converters"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:viewmodels="clr-namespace:SmartShop.ViewModels"
-		xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-		Title="Smart Shop"
-		MinWidth="1400"
-		MinHeight="900"
-		d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
-		WindowState="Maximized"
-		mc:Ignorable="d">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:busyIndicator="https://github.com/Peoky/BusyIndicator"
+        xmlns:converters="clr-namespace:SmartShop.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:SmartShop.ViewModels"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Smart Shop"
+        MinWidth="1400"
+        MinHeight="900"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        WindowState="Maximized"
+        mc:Ignorable="d">
 	<Window.Resources>
 		<converters:CountToBooleanConverter x:Key="CountToBooleanConverter" />
 		<converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
 	</Window.Resources>
 
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
+	<busyIndicator:BusyMask IndicatorType="Escalade"
+	                        IsBusy="{Binding IsBusy}">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
 
-		<StackPanel Grid.Row="0"
-					Margin="10"
-					HorizontalAlignment="Center"
-					Orientation="Horizontal">
-			<xctk:WatermarkTextBox x:Name="SearchBox"
-								   Width="250"
-								   Height="30"
-								   Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-								   Watermark="Αναζήτηση..." />
-			<Button Width="45"
-					Height="30"
-					Margin="5 0"
-					Command="{Binding ClearCommand}"
-					Content="&#x2716;"
-					FontSize="12" />
-		</StackPanel>
+			<StackPanel Grid.Row="0"
+			            Margin="10"
+			            HorizontalAlignment="Center"
+			            Orientation="Horizontal">
+				<xctk:WatermarkTextBox x:Name="SearchBox"
+				                       Width="250"
+				                       Height="30"
+				                       Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				                       Watermark="Αναζήτηση..." />
+				<Button Width="45"
+				        Height="30"
+				        Margin="5 0"
+				        Command="{Binding ClearCommand}"
+				        Content="&#x2716;"
+				        FontSize="12" />
+			</StackPanel>
 
-		<Border Height="45"
-				Margin="10"
-				HorizontalAlignment="Right"
-				BorderBrush="SlateGray"
-				BorderThickness=".5"
-				CornerRadius="10">
-			<Button VerticalAlignment="Center"
-					Command="{Binding ViewCartCommand}"
-					FocusVisualStyle="{x:Null}"
-					Style="{StaticResource CustomButton}">
-				<StackPanel HorizontalAlignment="Left"
-							Orientation="Horizontal">
-					<Image Source="../Resources/basket.png" />
-					<TextBlock Margin="5 0"
-							   VerticalAlignment="Center"
-							   FontSize="24"
-							   Foreground="DarkSlateGray"
-							   Text="{Binding CartItems}" />
-				</StackPanel>
+			<Border Height="45"
+			        Margin="10"
+			        HorizontalAlignment="Right"
+			        BorderBrush="SlateGray"
+			        BorderThickness=".5"
+			        CornerRadius="10">
+				<Button VerticalAlignment="Center"
+				        Command="{Binding ViewCartCommand}"
+				        FocusVisualStyle="{x:Null}"
+				        Style="{StaticResource CustomButton}">
+					<StackPanel HorizontalAlignment="Left"
+					            Orientation="Horizontal">
+						<Image Source="../Resources/basket.png" />
+						<TextBlock Margin="5 0"
+						           VerticalAlignment="Center"
+						           FontSize="24"
+						           Foreground="DarkSlateGray"
+						           Text="{Binding CartItems}" />
+					</StackPanel>
 
-				<Button.IsEnabled>
-					<Binding Converter="{StaticResource CountToBooleanConverter}"
-							 FallbackValue="False"
-							 Path="CartItems" />
-				</Button.IsEnabled>
-			</Button>
-		</Border>
+					<Button.IsEnabled>
+						<Binding Converter="{StaticResource CountToBooleanConverter}"
+						         FallbackValue="False"
+						         Path="CartItems" />
+					</Button.IsEnabled>
+				</Button>
+			</Border>
 
-		<DataGrid Grid.Row="1"
-				  Margin="10"
-				  HorizontalAlignment="Center"
-				  VerticalAlignment="Top"
-				  AutoGenerateColumns="False"
-				  ItemsSource="{Binding PagedProducts}"
-				  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-				  SelectionMode="Single">
-			<DataGrid.Columns>
-				<DataGridTextColumn Width="150"
-									Binding="{Binding Store}"
-									Header="Κατάστημα" />
-				<DataGridTemplateColumn Width="650"
-										Header="Προϊόν"
-										HeaderStyle="{StaticResource {x:Type DataGridColumnHeader}}"
-										SortMemberPath="ProductName">
-					<DataGridTemplateColumn.CellTemplate>
+			<DataGrid Grid.Row="1"
+			          Margin="10"
+			          HorizontalAlignment="Center"
+			          VerticalAlignment="Top"
+			          AutoGenerateColumns="False"
+			          ItemsSource="{Binding PagedProducts}"
+			          ScrollViewer.HorizontalScrollBarVisibility="Auto"
+			          SelectionMode="Single">
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="150"
+					                    Binding="{Binding Store}"
+					                    Header="Κατάστημα" />
+					<DataGridTemplateColumn Width="650"
+					                        Header="Προϊόν"
+					                        HeaderStyle="{StaticResource {x:Type DataGridColumnHeader}}"
+					                        SortMemberPath="ProductName">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<TextBlock>
+									<Hyperlink FocusVisualStyle="{x:Null}"
+									           NavigateUri="{Binding Link}"
+									           RequestNavigate="Hyperlink_RequestNavigate">
+										<Run Text="{Binding ProductName}" />
+										<Hyperlink.Style>
+											<Style TargetType="Hyperlink">
+												<Style.Triggers>
+													<DataTrigger Binding="{Binding Store}"
+													             Value="ΑΒ Βασιλόπουλος">
+														<Setter Property="Foreground" Value="DarkBlue" />
+													</DataTrigger>
+
+													<DataTrigger Binding="{Binding Store}"
+													             Value="Σκλαβενίτης">
+														<Setter Property="Foreground" Value="Crimson" />
+													</DataTrigger>
+												</Style.Triggers>
+											</Style>
+										</Hyperlink.Style>
+									</Hyperlink>
+								</TextBlock>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTextColumn Width="110"
+					                    Binding="{Binding StartingPrice, StringFormat={}{0:F2}}"
+					                    Header="Αρχική τιμή" />
+					<DataGridTextColumn Width="110"
+					                    Binding="{Binding FinalPrice, StringFormat={}{0:F2}}"
+					                    Header="Τελική τιμή" />
+					<DataGridTextColumn Width="90"
+					                    Binding="{Binding DiscountPercentage, StringFormat={}{0:P2}}"
+					                    Header="Ποσοστό έκπτωσης" />
+					<DataGridTextColumn Width="100"
+					                    Binding="{Binding PricePerUnitWithMetricUnit}"
+					                    Header="Τιμή ανά μονάδα" />
+					<DataGridTemplateColumn Header="Ιστορικότητα">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<TextBlock>
+									<Hyperlink Command="{Binding DataContext.ViewHistoryCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+									           CommandParameter="{Binding}"
+									           FocusVisualStyle="{x:Null}">
+										<TextBlock Text="Προβολή" />
+									</Hyperlink>
+								</TextBlock>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTemplateColumn Width="95"
+					                        Header="Καλάθι αγορών"
+					                        HeaderStyle="{StaticResource {x:Type DataGridColumnHeader}}"
+					                        SortMemberPath="IsInCart">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<TextBlock>
+									<Hyperlink Command="{Binding DataContext.CartLinkClickCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+									           CommandParameter="{Binding}"
+									           FocusVisualStyle="{x:Null}">
+										<Run Text="{Binding IsInCart, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='Αφαίρεση|Προσθήκη'}" />
+									</Hyperlink>
+								</TextBlock>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+				</DataGrid.Columns>
+
+				<DataGrid.Resources>
+					<Style TargetType="{x:Type DataGridRow}">
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding Store}"
+							             Value="ΑΒ Βασιλόπουλος">
+								<Setter Property="Foreground" Value="DarkBlue" />
+							</DataTrigger>
+
+							<DataTrigger Binding="{Binding Store}"
+							             Value="Σκλαβενίτης">
+								<Setter Property="Foreground" Value="Crimson" />
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</DataGrid.Resources>
+			</DataGrid>
+
+			<Grid Grid.Row="2"
+			      Margin="10">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="2*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Button Grid.Column="0"
+				        Margin="10"
+				        HorizontalAlignment="Right"
+				        Command="{Binding GoToPreviousPageCommand}">
+					<TextBlock FontSize="24"
+					           Text="&#x2190;"
+					           TextAlignment="Center"
+					           TextWrapping="Wrap" />
+				</Button>
+
+				<ItemsControl Grid.Column="1"
+				              HorizontalAlignment="Center"
+				              ItemsSource="{Binding Pages}">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel VerticalAlignment="Center" />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+
+					<ItemsControl.ItemTemplate>
 						<DataTemplate>
-							<TextBlock>
-								<Hyperlink FocusVisualStyle="{x:Null}"
-										   NavigateUri="{Binding Link}"
-										   RequestNavigate="Hyperlink_RequestNavigate">
-									<Run Text="{Binding ProductName}" />
-									<Hyperlink.Style>
-										<Style TargetType="Hyperlink">
-											<Style.Triggers>
-												<DataTrigger Binding="{Binding Store}"
-															 Value="ΑΒ Βασιλόπουλος">
-													<Setter Property="Foreground" Value="DarkBlue" />
-												</DataTrigger>
-
-												<DataTrigger Binding="{Binding Store}"
-															 Value="Σκλαβενίτης">
-													<Setter Property="Foreground" Value="Crimson" />
-												</DataTrigger>
-											</Style.Triggers>
-										</Style>
-									</Hyperlink.Style>
-								</Hyperlink>
-							</TextBlock>
+							<Button Margin="5 0"
+							        Command="{Binding DataContext.GoToPageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+							        CommandParameter="{Binding}"
+							        Content="{Binding Number}"
+							        Style="{DynamicResource PaginationButtonStyle}" />
 						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-				<DataGridTextColumn Width="110"
-									Binding="{Binding StartingPrice, StringFormat={}{0:F2}}"
-									Header="Αρχική τιμή" />
-				<DataGridTextColumn Width="110"
-									Binding="{Binding FinalPrice, StringFormat={}{0:F2}}"
-									Header="Τελική τιμή" />
-				<DataGridTextColumn Width="90"
-									Binding="{Binding DiscountPercentage, StringFormat={}{0:P2}}"
-									Header="Ποσοστό έκπτωσης" />
-				<DataGridTextColumn Width="100"
-									Binding="{Binding PricePerUnitWithMetricUnit}"
-									Header="Τιμή ανά μονάδα" />
-				<DataGridTemplateColumn Header="Ιστορικότητα">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock>
-								<Hyperlink Command="{Binding DataContext.ViewHistoryCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-										   CommandParameter="{Binding}"
-										   FocusVisualStyle="{x:Null}">
-									<TextBlock Text="Προβολή" />
-								</Hyperlink>
-							</TextBlock>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-				<DataGridTemplateColumn Width="95"
-										Header="Καλάθι αγορών"
-										HeaderStyle="{StaticResource {x:Type DataGridColumnHeader}}"
-										SortMemberPath="IsInCart">
-					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<TextBlock>
-								<Hyperlink Command="{Binding DataContext.CartLinkClickCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-										   CommandParameter="{Binding}"
-										   FocusVisualStyle="{x:Null}">
-									<Run Text="{Binding IsInCart, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='Αφαίρεση|Προσθήκη'}" />
-								</Hyperlink>
-							</TextBlock>
-						</DataTemplate>
-					</DataGridTemplateColumn.CellTemplate>
-				</DataGridTemplateColumn>
-			</DataGrid.Columns>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
 
-			<DataGrid.Resources>
-				<Style TargetType="{x:Type DataGridRow}">
-					<Style.Triggers>
-						<DataTrigger Binding="{Binding Store}"
-									 Value="ΑΒ Βασιλόπουλος">
-							<Setter Property="Foreground" Value="DarkBlue" />
-						</DataTrigger>
-
-						<DataTrigger Binding="{Binding Store}"
-									 Value="Σκλαβενίτης">
-							<Setter Property="Foreground" Value="Crimson" />
-						</DataTrigger>
-					</Style.Triggers>
-				</Style>
-			</DataGrid.Resources>
-		</DataGrid>
-
-		<Grid Grid.Row="2"
-			  Margin="10">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="2*" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
-
-			<Button Grid.Column="0"
-					Margin="10"
-					HorizontalAlignment="Right"
-					Command="{Binding GoToPreviousPageCommand}">
-				<TextBlock FontSize="24"
-						   Text="&#x2190;"
-						   TextAlignment="Center"
-						   TextWrapping="Wrap" />
-			</Button>
-
-			<ItemsControl Grid.Column="1"
-						  HorizontalAlignment="Center"
-						  ItemsSource="{Binding Pages}">
-				<ItemsControl.ItemsPanel>
-					<ItemsPanelTemplate>
-						<WrapPanel VerticalAlignment="Center" />
-					</ItemsPanelTemplate>
-				</ItemsControl.ItemsPanel>
-
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<Button Margin="5 0"
-								Command="{Binding DataContext.GoToPageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-								CommandParameter="{Binding}"
-								Content="{Binding Number}"
-								Style="{DynamicResource PaginationButtonStyle}" />
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
-
-			<Button Grid.Column="2"
-					Margin="10"
-					HorizontalAlignment="Left"
-					Command="{Binding GoToNextPageCommand}">
-				<TextBlock FontSize="24"
-						   Text="&#x2192;"
-						   TextAlignment="Center"
-						   TextWrapping="Wrap" />
-			</Button>
+				<Button Grid.Column="2"
+				        Margin="10"
+				        HorizontalAlignment="Left"
+				        Command="{Binding GoToNextPageCommand}">
+					<TextBlock FontSize="24"
+					           Text="&#x2192;"
+					           TextAlignment="Center"
+					           TextWrapping="Wrap" />
+				</Button>
+			</Grid>
 		</Grid>
-	</Grid>
+	</busyIndicator:BusyMask>
 </Window>

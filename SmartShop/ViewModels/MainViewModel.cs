@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace SmartShop.ViewModels;
@@ -22,6 +23,7 @@ public class MainViewModel : PropertyChangedBase
 	private readonly List<ProductHistory> _productHistories;
 
 	private string _searchText;
+	private bool _isBusy = false;
 	private int _totalPages, _currentPage, _itemsPerPage, _cartItems;
 	private ObservableCollection<Product> _allProducts, _pagedProducts;
 	private ObservableCollection<Page> _pages = new ObservableCollection<Page>();
@@ -48,13 +50,14 @@ public class MainViewModel : PropertyChangedBase
 		GoToPreviousPageCommand = new RelayCommand(_ => CurrentPage--, (_ => CurrentPage > 1));
 		GoToNextPageCommand = new RelayCommand(_ => CurrentPage++, (_ => CurrentPage < TotalPages && TotalPages > 0));
 		GoToPageCommand = new RelayCommand(obj => GoToPage(obj));
-		ViewCartCommand = new RelayCommand(_ => ViewCart(), (_ => _cartService.GetCart().Items.Count > 0));
+		ViewCartCommand = new RelayCommand(async _ => await ViewCartAsync(), (_ => _cartService.GetCart().Items.Count > 0));
 		CartLinkClickCommand = new RelayCommand(obj => ChangeProductCartState(obj));
 		ViewHistoryCommand = new RelayCommand(obj => ViewHistory(obj), (obj) => obj is Product product && _productHistories.Count(p => p.Code == product.Code) > 1);
 
 		AllProducts = new ObservableCollection<Product>(_products);
 	}
 
+	public bool IsBusy { get => _isBusy; set => SetField(ref _isBusy, value); }
 	public int CartItems { get => _cartItems; set => SetField(ref _cartItems, value); }
 	public int TotalPages { get => _totalPages; private set => SetField(ref _totalPages, value); }
 	public ObservableCollection<Page> Pages { get => _pages; set => SetField(ref _pages, value); }
@@ -149,16 +152,23 @@ public class MainViewModel : PropertyChangedBase
 		}
 	}
 
-	private void ViewCart()
+	private async Task ViewCartAsync()
 	{
-		// Resolves the CartViewModel instance from the container
-		var cartViewModel = _componentContext.Resolve<CartViewModel>(new NamedParameter("products", _products));
+		await Task.Run(() => IsBusy = true).ContinueWith(_ =>
+		{
+			// Resolves the CartViewModel instance from the container
+			var cartViewModel = _componentContext.Resolve<CartViewModel>(new NamedParameter("products", _products));
 
-		// Resolves the CartWindow instance from the container
-		var cartWindow = _componentContext.Resolve<CartWindow>();
-		cartWindow.Closed += CartWindowClosed;
-		cartWindow.DataContext = cartViewModel;
-		cartWindow.ShowDialog();
+			Application.Current.Dispatcher.Invoke(() =>
+			{
+				// Resolves the CartWindow instance from the container
+				var cartWindow = _componentContext.Resolve<CartWindow>();
+				cartWindow.Closed += CartWindowClosed;
+				IsBusy = false;
+				cartWindow.DataContext = cartViewModel;
+				cartWindow.ShowDialog();
+			});
+		});
 	}
 
 	private void CartWindowClosed(object sender, EventArgs e)

@@ -5,6 +5,10 @@
              Startup="OnStartup">
 	<Application.Resources>
 		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="pack://application:,,,/BusyIndicator;component/Theme/Default.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+			
 			<!--  Application Primary Color  -->
 			<SolidColorBrush x:Key="AppThemePrimaryColor"
 			                 Color="#00214D" />
